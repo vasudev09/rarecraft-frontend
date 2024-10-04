@@ -1,10 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    forceSwcTransforms: true,
+  },
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn-icons-png.flaticon.com",
+        hostname: "images.pexels.com",
+      },
+      {
+        protocol: "https",
+        hostname: "m.media-amazon.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
       },
     ],
   },

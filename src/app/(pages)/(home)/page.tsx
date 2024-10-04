@@ -1,5 +1,23 @@
-import Image from "next/image";
+import Banner from "@/components/website/home/Banner";
+import BrandList from "@/components/website/home/BrandList";
+import Payments from "@/components/website/home/Payments";
+import TopCategories from "@/components/website/home/TopCategories";
+import Cta from "@/components/website/home/Cta";
+import FeaturedProducts from "@/components/website/home/FeaturedProducts";
+import Newsletter from "@/components/website/home/NewsLetter";
+
+import * as React from "react";
 
 export default function Home() {
-  return <div className="min-h-screen p-8 pb-20 gap-16">Home</div>;
+  return (
+    <>
+      <Banner />
+      <BrandList />
+      <Payments />
+      <Cta />
+      <FeaturedProducts />
+      <TopCategories />
+      <Newsletter />
+    </>
+  );
 }

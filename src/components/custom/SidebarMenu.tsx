@@ -11,10 +11,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
 import Loading from "./Loading";
-import { Category, Page, SubCategory, SubPage } from "@/types";
+import { Category, Page } from "@/types";
 import { useRouter } from "next/navigation";
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
 
 export default function SidebarMenu() {
   const [loading, setLoading] = useState(false);
@@ -95,31 +93,9 @@ export default function SidebarMenu() {
                           router.push(`/categories/${item.link}/products`)
                         }
                       >
-                        <div className="flex items-center gap-4 w-full">
+                        <div className="w-full">
                           <span>{item.name}</span>
-                          {item?.submenu && item.submenu.length > 0 && (
-                            <ChevronRight className="ms-auto" />
-                          )}
                         </div>
-
-                        {item?.submenu && item.submenu.length > 0 ? (
-                          <div className="hidden absolute group-hover:grid grid-cols-3 gap-6 shadow-sm left-0 bg-white p-4 w-full">
-                            {item.submenu.map(
-                              (item2: SubCategory, idx: number) => {
-                                return (
-                                  <Link
-                                    key={idx}
-                                    href={`/categories/${item2.link}/products`}
-                                  >
-                                    {item2.name}
-                                  </Link>
-                                );
-                              }
-                            )}
-                          </div>
-                        ) : (
-                          ""
-                        )}
                       </div>
                     );
                   })}
@@ -137,26 +113,9 @@ export default function SidebarMenu() {
                         key={idx}
                         onClick={() => router.push(`item.link}`)}
                       >
-                        <div className="flex items-center gap-4 w-full">
+                        <div className="w-full">
                           <span>{item.name}</span>
-                          {item?.subPage && item.subPage.length > 0 && (
-                            <ChevronRight className="ms-auto" />
-                          )}
                         </div>
-
-                        {item?.subPage && item.subPage.length > 0 ? (
-                          <div className="hidden absolute group-hover:grid grid-cols-3 gap-6 shadow-sm left-0 bg-white p-4 w-full">
-                            {item.subPage.map((item2: SubPage, idx: number) => {
-                              return (
-                                <Link key={idx} href={`${item2.link}`}>
-                                  {item2.name}
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        ) : (
-                          ""
-                        )}
                       </div>
                     );
                   })}
