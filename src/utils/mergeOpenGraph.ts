@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 //Default open graph
 
 const defaultOpenGraph: Metadata["openGraph"] = {
-  title: "RareCraft",
+  title: "RareCraft - Artisan Shop",
   description:
     "Discover unique, handcrafted treasures at RareCraft – your premier destination for one-of-a-kind artisanal products.",
 

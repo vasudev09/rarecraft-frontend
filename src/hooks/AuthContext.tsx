@@ -7,6 +7,7 @@ import React, {
   ReactNode,
   useContext,
 } from "react";
+import { Auth } from "@/APIs/auth";
 
 interface AuthContextType {
   isAuthenticated: boolean | null;
@@ -21,14 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const validateUser = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/validate-user/`,
-          {
-            credentials: "include",
-            cache: "no-cache",
-          }
-        );
-
+        const response = await Auth.validateUser();
         if (response.status === 200) {
           setIsAuthenticated(true);
         } else {
