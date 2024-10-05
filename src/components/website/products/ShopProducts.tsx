@@ -8,11 +8,13 @@ import { Pagination } from "@mui/material";
 export default function ShopProducts({
   loading,
   setLoading,
-  slug,
+  category,
+  brand,
 }: {
   loading: boolean;
-  slug?: string;
   setLoading: (value: boolean) => void;
+  category?: string;
+  brand?: string;
 }) {
   const [products, setProducts] = useState([
     {
@@ -1361,7 +1363,8 @@ export default function ShopProducts({
       .get(process.env.NEXT_PUBLIC_API_URL + "/api/products", {
         params: {
           filter: filter,
-          category: slug,
+          category: category,
+          brand: brand,
           minPrice: minPrice,
           maxPrice: maxPrice,
         },
@@ -1382,7 +1385,7 @@ export default function ShopProducts({
       getProducts();
     }, 500);
     return () => clearTimeout(debounceTimeout);
-  }, [page, filter, slug, minPrice, maxPrice]);
+  }, [page, filter, category, brand, minPrice, maxPrice]);
 
   return (
     <div>
@@ -1392,7 +1395,7 @@ export default function ShopProducts({
         setMinPrice={setMinPrice}
         setMaxPrice={setMaxPrice}
         loading={loading}
-        slug={slug}
+        slug={category ? category : brand}
         perpage={perpage}
         filter={filter}
         setPerPages={setPerPages}

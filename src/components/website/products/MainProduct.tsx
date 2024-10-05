@@ -5,15 +5,22 @@ import ShopProducts from "./ShopProducts";
 export default function MainProduct({
   loading,
   setLoading,
-  slug,
+  category,
+  brand,
 }: {
   loading: boolean;
   setLoading: (value: boolean) => void;
-  slug?: string;
+  category?: string;
+  brand?: string;
 }) {
   return (
     <div className="flex flex-col gap-4 w-full">
-      <ShopProducts loading={loading} setLoading={setLoading} slug={slug} />
+      <ShopProducts
+        loading={loading}
+        setLoading={setLoading}
+        category={category}
+        brand={brand}
+      />
     </div>
   );
 }

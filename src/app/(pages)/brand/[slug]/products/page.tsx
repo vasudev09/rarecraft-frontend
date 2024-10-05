@@ -1,8 +1,8 @@
-import CategoriesPage from "@/components/website/categories/CategoriesPage";
+import BrandPage from "@/components/website/brand/brandPage";
 import React from "react";
 
 export default function page({ params }: { params: { slug: string } }) {
-  return <CategoriesPage slug={params.slug} />;
+  return <BrandPage slug={params.slug} />;
 }
 
 export async function generateMetadata({
@@ -25,7 +25,7 @@ export async function generateMetadata({
       } - RareCraft`,
     },
     alternates: {
-      canonical: `/categories/${params.slug}/products`,
+      canonical: `/brand/${params.slug}/products`,
     },
   };
 }
