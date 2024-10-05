@@ -12,7 +12,11 @@ export default function CategoriesPage({ slug }: { slug: string }) {
       <Container>
         <div className="flex h-full gap-10 w-full">
           <SidebarLeft loading={loading} />
-          <MainProduct slug={slug} loading={loading} setLoading={setLoading} />
+          <MainProduct
+            category={slug}
+            loading={loading}
+            setLoading={setLoading}
+          />
         </div>
       </Container>
     </section>

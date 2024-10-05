@@ -11,7 +11,6 @@ export type Product = {
   slug: string;
   description: string;
   category: Category;
-  subCategories: SubCategory[];
   brand: Brand;
   content: string;
   details: Detail[];
@@ -29,17 +28,6 @@ export type Page = {
   _id: string;
   name: string;
   link: string;
-  subPage: SubPage[];
-  createdAt: Date;
-};
-
-export type SubPage = {
-  _id: string;
-  name: string;
-  link: string;
-  slug: string;
-  parent: string;
-  createdAt: Date;
 };
 
 export type Question = {
@@ -53,8 +41,8 @@ export type Review = {
   rating: number;
   review: string;
   likes: string[];
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
 };
 
 export type User = {
@@ -96,17 +84,6 @@ export type Category = {
   link: string;
   slug: string;
   image: string;
-  createdAt?: Date;
-  submenu?: SubCategory[];
-};
-
-export type SubCategory = {
-  _id: string;
-  name: string;
-  link: string;
-  slug: string;
-  parent?: string;
-  createdAt?: Date;
 };
 
 export type Brand = {
@@ -115,66 +92,8 @@ export type Brand = {
   link: string;
   slug: string;
   image: string;
-  createdAt?: Date;
 };
 
-export type CartItem = {
-  product: string;
-  name: string;
-  description: string;
-  optionBefore: number;
-  option: string;
-  slug: string;
-  sku: string;
-  shipping: string;
-  images: string[];
-  style: Style;
-  price: number;
-  priceBefore: number;
-  qty: number;
-  stock: number;
-  brand: string;
-  likes: string[];
-  _uid: string;
-};
-
-export type Order = {
-  _id: string;
-  user: User;
-  products: ProductOrder[];
-  paymentMethod: string;
-  total: number;
-  shippingPrice: number;
-  taxPrice: number;
-  isPaid: boolean;
-  status: string;
-  totalBeforeDiscount: number;
-  couponApplied: Coupon;
-  shippingStatus: string;
-  shippingAddress: Address;
-  paymentResult: string;
-  shippingTimes: string;
-  shipping: Address;
-  createdAt: Date;
-};
-
-export type ProductOrder = {
-  _id: string;
-  product: string;
-  name: string;
-  images: string;
-  option: string;
-  qty: number;
-  style: Style;
-  price: number;
-};
-export type Coupon = {
-  id: string;
-  coupon: string;
-  startDate: Date;
-  endDate: Date;
-  discount: number;
-};
 export type Address = {
   _id: string;
   firstName: string;
@@ -185,42 +104,6 @@ export type Address = {
   address: string;
   phoneNumber: string;
   state: string;
-};
-
-export type Slide = {
-  _id: string;
-  name: string;
-  link: string;
-  btn: string;
-  title: string;
-  subtitle: string;
-  slug: string;
-  image: string;
-  textColor: string;
-  createdAt?: Date;
-};
-
-export type Cart = {
-  cartItems: CartItem[];
-  cartTotal: number;
-  products: Product[];
-};
-
-export type Delivery = {
-  id: string;
-  title: string;
-  subtitle: string;
-  image: string;
-  times: string;
-  price: number;
-};
-
-export type Payment = {
-  id: string;
-  title: string;
-  subtitle: string;
-  image: string;
-  slug: string;
 };
 
 export type sendEmailTypes = {

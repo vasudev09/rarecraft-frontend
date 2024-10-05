@@ -1,4 +1,4 @@
-import BrandPage from "@/components/website/brand/brandPage";
+import BrandPage from "@/components/website/brand/BrandPage";
 import React from "react";
 
 export default function page({ params }: { params: { slug: string } }) {
