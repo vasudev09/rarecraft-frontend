@@ -1,5 +1,5 @@
 import Banner from "@/components/website/home/Banner";
-import BrandList from "@/components/website/home/BrandList";
+import BrandCarousel from "@/components/website/home/BrandCarousel";
 import Payments from "@/components/website/home/Payments";
 import TopCategories from "@/components/website/home/TopCategories";
 import Cta from "@/components/website/home/Cta";
@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Banner />
-      <BrandList />
+      <BrandCarousel />
       <Payments />
       <Cta />
       <FeaturedProducts />

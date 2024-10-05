@@ -14,7 +14,7 @@ import Link from "next/link";
 import Loading from "@/components/custom/Loading";
 import Image from "next/image";
 
-export default function BrandList() {
+export default function BrandCarousel() {
   const [loading, setLoading] = useState(false);
   const [brands, setBrands] = useState([
     {
