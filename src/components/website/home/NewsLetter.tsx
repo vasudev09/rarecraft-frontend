@@ -11,7 +11,7 @@ export default function Newsletter() {
   const [email, setEmail] = useState("");
 
   const handleSave = async () => {
-    // setLoading(true);
+    setLoading(true);
 
     const Email = z.object({
       email: z.string().email().min(5),
@@ -38,23 +38,18 @@ export default function Newsletter() {
     //     email: email,
     //     message: "Ijust subscribed to your newsletter",
     //   };
-
-    //   // Fetch api
     //   try {
     //     const response = await fetch(
-    //       process.env.NEXT_PUBLIC_API_URL + "/api/sendemail",
+    //       process.env.NEXT_PUBLIC_API_BASE_URL + "/api/sendemail",
     //       { method: "POST", body: JSON.stringify(values) }
     //     );
-
     //     if (!response.ok) {
     //       response.json().then((data) => {
-    //         console.log(data);
     //         toast.custom(<Toast message={data.message} status="error" />);
     //         return data;
     //       });
     //     } else {
     //       response.json().then((data) => {
-    //         console.log(data);
     //         toast.custom(<Toast message={data.message} status="success" />);
     //         return data;
     //       });
@@ -62,10 +57,10 @@ export default function Newsletter() {
     //   } catch (error) {
     //     console.error(error);
     //   }
-    //   setLoading(false);
     // };
 
     // await sendEmail();
+    setLoading(false);
   };
 
   return (

@@ -3,7 +3,7 @@ import axios from "axios";
 let config = {
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   withCredentials: true,
-  headers: { "content-type": "application/json", "cache-control": "no-cache" },
+  headers: { "cache-control": "no-cache" },
 };
 
 const apiClient = axios.create(config);
@@ -30,6 +30,14 @@ export function put(url: string, data = {}, config = {}) {
     url,
     method: "put",
     data,
+    ...config,
+  });
+}
+
+export function del(url: string, config = {}) {
+  return apiClient.request({
+    url,
+    method: "delete",
     ...config,
   });
 }

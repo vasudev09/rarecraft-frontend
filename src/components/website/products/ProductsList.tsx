@@ -17,7 +17,7 @@ export default function ProductList({
         {!loading ? (
           products &&
           products.map((item: Product, idx: number) => (
-            <ProductCard loading={loading} item={item} key={idx} />
+            <ProductCard item={item} key={idx} />
           ))
         ) : (
           <Loading isLoading={loading} />

@@ -7,28 +7,27 @@ import {
   SheetTrigger,
 } from "@/components/custom/Sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./Tabs";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
 import Loading from "./Loading";
-import { Category, Page } from "@/types";
-import { useRouter } from "next/navigation";
+import { Category, Brand } from "@/types";
+import { CategoryAPI } from "@/APIs/category";
+import { BrandAPI } from "@/APIs/brand";
+import Link from "next/link";
 
 export default function SidebarMenu() {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
-
-  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   // get api
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true);
-      await axios
-        .get(process.env.NEXT_PUBLIC_API_URL + "/api/categories")
+      await CategoryAPI.getList()
         .then((response) => {
-          setCategories(response.data.data);
+          setCategories(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -40,10 +39,9 @@ export default function SidebarMenu() {
     const getBrands = async () => {
       setLoading(true);
 
-      await axios
-        .get(process.env.NEXT_PUBLIC_API_URL + "/api/brands")
+      await BrandAPI.getList()
         .then((response) => {
-          setBrands(response.data.data);
+          setBrands(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -57,7 +55,7 @@ export default function SidebarMenu() {
   }, []);
 
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger>
         <div className="lg:hidden">
           <span className="flex cursor-pointer lg:hidden">
@@ -84,19 +82,18 @@ export default function SidebarMenu() {
                 {loading && <Loading isLoading={loading} />}
 
                 {categories.length > 0 &&
-                  categories.map((item: Category, idx: number) => {
+                  categories.slice(0, 10).map((item: Category, idx: number) => {
                     return (
-                      <div
-                        className="group inline-flex items-center px-4 py-2 gap-4 w-full hover:text-primary-700 capitalize cursor-pointer"
+                      <Link
                         key={idx}
-                        onClick={() =>
-                          router.push(`/categories/${item.link}/products`)
-                        }
+                        href={`/categories/${item.slug}/products`}
+                        onClick={() => setIsOpen(false)}
+                        className="group inline-flex items-center px-4 py-2 gap-4 w-full hover:text-primary-700 capitalize cursor-pointer"
                       >
                         <div className="w-full">
                           <span>{item.name}</span>
                         </div>
-                      </div>
+                      </Link>
                     );
                   })}
               </div>
@@ -106,17 +103,18 @@ export default function SidebarMenu() {
                 {loading && <Loading isLoading={loading} />}
 
                 {brands.length > 0 &&
-                  brands.map((item: Page, idx: number) => {
+                  brands.slice(0, 10).map((item: Brand, idx: number) => {
                     return (
-                      <div
-                        className="group inline-flex items-center px-4 py-2 gap-4 w-full hover:text-primary-700 capitalize cursor-pointer"
+                      <Link
                         key={idx}
-                        onClick={() => router.push(`item.link}`)}
+                        href={`/brand/${item.slug}/products`}
+                        onClick={() => setIsOpen(false)}
+                        className="group inline-flex items-center px-4 py-2 gap-4 w-full hover:text-primary-700 capitalize cursor-pointer"
                       >
                         <div className="w-full">
                           <span>{item.name}</span>
                         </div>
-                      </div>
+                      </Link>
                     );
                   })}
               </div>

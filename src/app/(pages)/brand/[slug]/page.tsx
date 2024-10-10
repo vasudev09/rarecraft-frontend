@@ -10,26 +10,31 @@ import {
 } from "@/components/custom/BreadCrumb";
 import Link from "next/link";
 import React from "react";
-import axios from "axios";
-
+import { BrandAPI } from "@/APIs/brand";
 export default async function page({ params }: { params: { slug: string } }) {
   async function getBrandBySlug(slug: string) {
     try {
-      const response = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "/api/brand",
-        {
-          params: {
-            slug: slug,
-          },
-        }
-      );
+      const response = await BrandAPI.getBySlug({
+        params: {
+          slug: slug,
+        },
+      });
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
-      return error;
+      return null;
     }
   }
-  const brand = {};
+
+  const brand = await getBrandBySlug(params.slug);
+
+  if (!brand) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <h1 className="text-2xl font-bold">Brand not found</h1>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -41,15 +46,13 @@ export default async function page({ params }: { params: { slug: string } }) {
               <Link href={"/products"}>store</Link>
               <BreadcrumbSeparator />
 
-              <Link href={`/categories/${"brand.name"}/products`}>
-                {"brand.name"}
-              </Link>
+              <Link href={`/brand/${brand.slug}/products`}>{brand.name}</Link>
 
               <BreadcrumbSeparator />
 
               <BreadcrumbItem>
                 <BreadcrumbPage className="font-medium">
-                  {"brand.name"}
+                  {brand.name}
                 </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
@@ -57,8 +60,8 @@ export default async function page({ params }: { params: { slug: string } }) {
         </Container>
       </section>
 
-      {/* <BrandWrapper brand={brand} /> */}
-      <BrandProductsList />
+      <BrandWrapper brand={brand} />
+      <BrandProductsList brand={brand.slug} />
     </>
   );
 }

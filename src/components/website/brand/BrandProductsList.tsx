@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Heading from "@/components/custom/Custom";
 import Container from "../../custom/Container";
-import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { cn } from "@/utils";
@@ -12,27 +11,32 @@ import "swiper/css/pagination";
 import "swiper/css";
 import { Product } from "@/types";
 import ProductCard from "@/components/custom/ProductCard";
+import { ProductAPI } from "@/APIs/product";
+import { Skeleton } from "@/components/custom/Skeleton";
 
-export default function BrandProductsList() {
+export default function BrandProductsList({ brand }: { brand: string }) {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // const getProducts = () => {
-    //   setLoading(true);
-    //   axios
-    //     .get(process.env.NEXT_PUBLIC_API_URL + "/api/products")
-    //     .then((response) => {
-    //       setProducts(response.data.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.message);
-    //     })
-    //     .finally(() => {
-    //       setLoading(false);
-    //     });
-    // };
-    // getProducts();
+    const getProducts = () => {
+      setLoading(true);
+      ProductAPI.getList({
+        params: {
+          brand: brand,
+        },
+      })
+        .then((response) => {
+          setProducts(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    };
+    getProducts();
   }, []);
 
   return (
@@ -55,10 +59,11 @@ export default function BrandProductsList() {
           modules={[Autoplay, Navigation, Pagination]}
           className={cn("mySwiper h-full w-full")}
         >
+          {loading && <Skeleton className="h-[40vh] my-2" />}
           {products &&
             products.slice(0, 10).map((item: Product, idx: number) => (
               <SwiperSlide key={idx} className="relative py-10">
-                <ProductCard loading={loading} item={item} />
+                <ProductCard item={item} />
               </SwiperSlide>
             ))}
         </Swiper>

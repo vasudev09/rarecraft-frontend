@@ -24,18 +24,19 @@ export default function ProductSpecifications({
               <TabsTrigger value="spec">Specifications</TabsTrigger>
             </TabsList>
             <TabsContent value="desc">
-              <Card className="p-10 tracking-wider txt-sm leading-8 ">
-                {product.content}
+              <Card className="p-10 text-slate-700 tracking-wider text-sm leading-8 ">
+                <p>{product.description}</p>
+                <p className="mt-2">{product.content}</p>
               </Card>
             </TabsContent>
             <TabsContent value="spec">
               <Card className="p-10 flex flex-col gap-4">
                 {product.details.map((item: Detail, idx: number) => (
                   <div key={idx} className="grid grid-cols-2">
-                    <span className="w-80 font-bold text-xl capitalize">
-                      {item.name}
+                    <span className="w-80 font-medium capitalize">
+                      {item.key}
                     </span>
-                    <span className="text-base font-light ">{item.value}</span>
+                    <span className="text-base font-light">{item.value}</span>
                   </div>
                 ))}
               </Card>

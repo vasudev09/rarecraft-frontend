@@ -28,17 +28,27 @@ export default function ProductsCollections() {
     },
   ];
 
-  const handleRedirect = () => {
-    router.push("/products");
+  const handleRedirect = (index: number) => {
+    let path = "/products";
+    if (index === 0) {
+      path = path + "?tag=featured";
+    }
+    if (index === 1) {
+      path = path + "?tag=trending";
+    }
+    if (index === 2) {
+      path = path + "?tag=latest";
+    }
+    router.push(path);
   };
 
   return (
-    <div className="grid grid-cols-2 gap-3 w-full mt-8 md:px-8 h-[400px] sm:h-[300px]">
+    <div className="grid grid-cols-2 gap-3 w-full mt-8 md:px-8 h-[400px] sm:h-[350px]">
       {collections.map((collection, index) => (
         <div
           key={index}
           className="relative group rounded-xl overflow-hidden shadow-lg cursor-pointer"
-          onClick={handleRedirect}
+          onClick={() => handleRedirect(index)}
         >
           {/* Background Image */}
           <div

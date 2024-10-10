@@ -55,20 +55,20 @@ export default function TopBar({
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup value="bottom">
                   <DropdownMenuRadioItem
-                    value="top"
+                    value={filter}
                     onClick={() => setFilter("alphabetic")}
                   >
                     Alphabetic
                   </DropdownMenuRadioItem>
                   <DropdownMenuRadioItem
                     value={filter}
-                    onClick={() => setFilter("priceLowToHigh")}
+                    onClick={() => setFilter("price_lth")}
                   >
                     Price: Low to High
                   </DropdownMenuRadioItem>
                   <DropdownMenuRadioItem
                     value={filter}
-                    onClick={() => setFilter("priceHighToLow")}
+                    onClick={() => setFilter("price_htl")}
                   >
                     Price: High to Low
                   </DropdownMenuRadioItem>

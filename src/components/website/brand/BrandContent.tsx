@@ -15,18 +15,16 @@ export default function BrandContent({
   className: string;
   brand: Brand;
 }) {
-  const [loading, setLoading] = useState<boolean>(false);
   const pathname = usePathname();
 
   return (
     <section>
-      {loading && <Loading isLoading={loading} />}
       <Container>
         <div className={cn("flex gap-8 flex-wrap justify-between", className)}>
           <div className="flex flex-col flex-1 gap-4 items-start">
             <div className="flex flex-col gap-4">
               <h1 className="font-bold tracking-wide lg:text-xl">
-                {brand.name}
+                Brand: {brand.name}
               </h1>
 
               <div className="inline-flex items-ceneter gap-4">
@@ -34,18 +32,20 @@ export default function BrandContent({
                   name="half-rating-read"
                   className=""
                   readOnly
-                  value={3}
+                  value={Number(brand.reviews.avg_review)}
                   precision={0.5}
                 />
-                <span className="pt-0">({"brand.reviews.length"}) reviews</span>
+                <span className="pt-0">
+                  ({brand.reviews.total_reviews}) reviews
+                </span>
               </div>
 
               <div>
-                <p className="text-pretty text-sm/6">{"brand.description"}</p>
+                <p className="text-pretty text-sm/6">{brand.description}</p>
               </div>
             </div>
 
-            <div>no.of products</div>
+            <div>Products: {brand.total_products}</div>
 
             <li className="inline-flex justify-between gap-4">
               <span className="capitalize font-bold text-2xl">share:</span>
@@ -53,7 +53,8 @@ export default function BrandContent({
                 <span className="">
                   <Link
                     target="_blank"
-                    href={`https://x.com/intent/post?url=${process.env.NEXT_PUBLIC_SERVER_URL}${pathname}`}
+                    rel="noopener noreferer"
+                    href={`https://x.com/intent/post?url=${process.env.NEXT_PUBLIC_HOST_URL}${pathname}`}
                   >
                     <BsTwitterX className="hover:text-primary-500" />
                   </Link>
@@ -61,7 +62,8 @@ export default function BrandContent({
                 <span className="">
                   <Link
                     target="_blank"
-                    href={`https://linkedin.com/shareArticle?url=${process.env.NEXT_PUBLIC_SERVER_URL}${pathname}`}
+                    rel="noopener noreferer"
+                    href={`https://linkedin.com/shareArticle?url=${process.env.NEXT_PUBLIC_HOST_URL}${pathname}`}
                   >
                     <BsLinkedin className="hover:text-primary-500" />
                   </Link>
@@ -69,7 +71,8 @@ export default function BrandContent({
                 <span className="">
                   <Link
                     target="_blank"
-                    href={`https://facebook.com/sharer/sharer.php?url=${process.env.NEXT_PUBLIC_SERVER_URL}${pathname}`}
+                    rel="noopener noreferer"
+                    href={`https://facebook.com/sharer/sharer.php?u=${process.env.NEXT_PUBLIC_HOST_URL}${pathname}`}
                   >
                     <BsFacebook className="hover:text-primary-500" />
                   </Link>
@@ -77,7 +80,8 @@ export default function BrandContent({
                 <span className="">
                   <Link
                     target="_blank"
-                    href={`https://web.whatsapp.com/send?text=${process.env.NEXT_PUBLIC_SERVER_URL}${pathname}`}
+                    rel="noopener noreferer"
+                    href={`https://web.whatsapp.com/send?text=${process.env.NEXT_PUBLIC_HOST_URL}${pathname}`}
                   >
                     <BsWhatsapp className="hover:text-primary-500" />
                   </Link>

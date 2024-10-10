@@ -4,15 +4,13 @@ import MainProduct from "./MainProduct";
 import SidebarLeft from "./SidebarLeft";
 import React, { useState } from "react";
 
-export default function ProductsPage() {
-  const [loading, setLoading] = useState(false);
-
+export default function ProductsPage({ tag }: { tag: string }) {
   return (
-    <section className="my-6 h-full w-full">
+    <section className="my-6 min-h-screen w-full">
       <Container>
         <div className="flex h-full gap-14 w-full">
-          <SidebarLeft loading={loading} />
-          <MainProduct loading={loading} setLoading={setLoading} />
+          <SidebarLeft />
+          <MainProduct tag={tag} />
         </div>
       </Container>
     </section>

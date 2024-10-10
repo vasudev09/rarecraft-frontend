@@ -8,12 +8,12 @@ export default function ProductInfo({ product }: { product: Product }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="font-bold tracking-wide lg:text-xl">
+      <h1 className="text-slate-700 font-bold text-base lg:text-xl tracking-wider capitalize">
         {product.name.substring(0, 150)}
       </h1>
 
       {/* Ratings  */}
-      <div className="inline-flex items-ceneter gap-4">
+      <div className="inline-flex items-ceneter gap-4 text-slate-700">
         <Rating
           name="half-rating-read"
           className=""
@@ -22,11 +22,15 @@ export default function ProductInfo({ product }: { product: Product }) {
           precision={0.5}
         />
 
-        <span className="pt-0">({product.reviews.length}) reviews</span>
+        <span className="pt-2 text-slate-700">
+          ({product.reviews.length}) reviews
+        </span>
       </div>
 
       <div>
-        <p className="text-pretty text-sm/6">{product.description}</p>
+        <p className="text-pretty text-slate-500 font-normal text-sm/6">
+          {product.description}
+        </p>
       </div>
     </div>
   );

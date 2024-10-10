@@ -3,24 +3,17 @@ import React, { useState } from "react";
 import ShopProducts from "./ShopProducts";
 
 export default function MainProduct({
-  loading,
-  setLoading,
   category,
   brand,
+  tag,
 }: {
-  loading: boolean;
-  setLoading: (value: boolean) => void;
   category?: string;
   brand?: string;
+  tag?: string;
 }) {
   return (
     <div className="flex flex-col gap-4 w-full">
-      <ShopProducts
-        loading={loading}
-        setLoading={setLoading}
-        category={category}
-        brand={brand}
-      />
+      <ShopProducts category={category} brand={brand} tag={tag} />
     </div>
   );
 }

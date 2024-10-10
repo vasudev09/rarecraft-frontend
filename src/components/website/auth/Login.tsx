@@ -12,11 +12,13 @@ import { useRouter } from "next/navigation";
 import Loading from "../../custom/Loading";
 import Link from "next/link";
 import { useAuth } from "@/hooks/AuthContext";
+import { Auth } from "@/APIs/auth";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     if (isAuthenticated === true) {
       router.push("/");
@@ -38,55 +40,30 @@ export default function Login() {
     }
     setLoading(true);
 
-    try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/signin",
-        { method: "POST", body: JSON.stringify(values) }
-      );
-
-      if (!response.ok) {
-        response.json().then((data) => {
-          toast.custom(<Toast message={data.message} status="error" />);
-          return data;
-        });
-      } else {
-        response.json().then((data) => {
-          setIsAuthenticated(true);
-          toast.custom(<Toast message={data.message} status="success" />);
-          router.push("/");
-          return data;
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
-
-    // signIn("credentials", {
-    //   ...values,
-    //   redirect: false,
-    // })
-    //   .then((callback) => {
-    //     if (callback?.error) {
-    //       toast.custom(
-    //         <Toast message="A error occurs please retry" status="error" />
-    //       );
-    //       setLoading(false);
-    //     }
-
-    //     if (callback?.ok && !callback?.error) {
-    //       toast.custom(
-    //         <Toast message="Logged in , Redirecting..." status="success" />
-    //       );
-    //       router.push("/cart");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+    await Auth.login(values)
+      .then((response) => {
+        toast.custom(
+          <Toast message={response.data.message} status="success" />
+        );
+        setIsAuthenticated(true);
+        window.location.replace("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response) {
+          toast.custom(
+            <Toast
+              message={error.response.data.message || "Something went wrong"}
+              status="error"
+            />
+          );
+        } else {
+          toast.custom(<Toast message={error.message} status="error" />);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -115,11 +92,7 @@ export default function Login() {
                 handleSave(values);
               }}
             >
-              {({
-                errors,
-
-                /* and other goodies */
-              }) => (
+              {({ errors }) => (
                 <Form>
                   <div className="flex flex-col gap-4 w-[320px]">
                     <label htmlFor="email">Email</label>

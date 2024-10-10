@@ -13,11 +13,13 @@ import { useRouter } from "next/navigation";
 import Loading from "../../custom/Loading";
 import Link from "next/link";
 import { useAuth } from "@/hooks/AuthContext";
+import { Auth } from "@/APIs/auth";
 
 export default function Register() {
   const [loading, setLoading] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     if (isAuthenticated === true) {
       router.push("/");
@@ -35,44 +37,46 @@ export default function Register() {
     email: Yup.string().required().email(),
     password: Yup.string()
       .required("required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-      ),
+      .matches(/^.{8,}$/, "Must Contain 8 Characters"),
     confirm_password: Yup.string()
       .required("The passwords are not the same")
       .oneOf([Yup.ref("password"), "null"], "Passwords must match"),
   });
 
-  const handleSave = async (values: { email: string; password: string }) => {
+  const handleSave = async (values: {
+    name: string;
+    email: string;
+    password: string;
+  }) => {
     if (loading) {
       return;
     }
     setLoading(true);
 
-    try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_API_URL + "/api/register",
-        { method: "POST", body: JSON.stringify(values) }
-      );
-
-      if (!response.ok) {
-        response.json().then((data) => {
-          toast.custom(<Toast message={data.message} status="error" />);
-          return data;
-        });
-      } else {
-        response.json().then((data) => {
-          setIsAuthenticated(true);
-          toast.custom(<Toast message={data.message} status="success" />);
-          router.push("/");
-          return data;
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
+    await Auth.register(values)
+      .then((response) => {
+        toast.custom(
+          <Toast message={response.data.message} status="success" />
+        );
+        setIsAuthenticated(true);
+        window.location.replace("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response) {
+          toast.custom(
+            <Toast
+              message={error.response.data.message || "Something went wrong"}
+              status="error"
+            />
+          );
+        } else {
+          toast.custom(<Toast message={error.message} status="error" />);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -101,10 +105,7 @@ export default function Register() {
                 handleSave(values);
               }}
             >
-              {({
-                errors,
-                /* and other goodies */
-              }) => (
+              {({ errors }) => (
                 <Form>
                   <div className="flex flex-col gap-4 w-[320px]">
                     <label htmlFor="name">Name</label>

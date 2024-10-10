@@ -2,8 +2,12 @@ import ProductsPage from "@/components/website/products/ProductsPage";
 import { Metadata } from "next";
 import React from "react";
 
-export default function page() {
-  return <ProductsPage />;
+export default function page({
+  searchParams,
+}: {
+  searchParams: { tag: string };
+}) {
+  return <ProductsPage tag={searchParams.tag} />;
 }
 
 export const metadata: Metadata = {

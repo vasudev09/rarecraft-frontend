@@ -9,9 +9,10 @@ import { cn, getRating } from "@/utils";
 import { Button } from "@/components/custom/Button";
 import { Send } from "lucide-react";
 import Link from "next/link";
-import axios from "axios";
 import Toast from "../../custom/Toast";
 import toast from "react-hot-toast";
+import { ReviewAPI } from "@/APIs/review";
+import Loading from "@/components/custom/Loading";
 
 export default function AddReview({
   product,
@@ -25,11 +26,18 @@ export default function AddReview({
   const { isAuthenticated } = useAuth();
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
+
   const initialValues = {
     review: "",
     rating: "",
   };
-  const handleSave = async (values: { review: string }) => {
+  const handleSave = async (
+    values: { review: string },
+    { resetForm }: { resetForm: () => void } // destructure resetForm from Formik helpers
+  ) => {
+    if (loading) {
+      return;
+    }
     setLoading(true);
 
     if (!rating || rating === 0) {
@@ -39,25 +47,32 @@ export default function AddReview({
     }
 
     const data = {
-      productId: product._id,
+      product_id: product.id,
       review: values.review,
       rating: rating,
-      images: [],
-      likes: [],
-      createdAt: JSON.parse(JSON.stringify(new Date())),
     };
 
-    setReviews([...reviews, data]);
-
-    //api
-    await axios
-      .post(process.env.NEXT_PUBLIC_API_URL + "/api/review", data)
+    await ReviewAPI.add(data)
       .then((response) => {
-        const data = response.data;
-        toast.custom(<Toast message={data.message} status="success" />);
+        toast.custom(
+          <Toast message={response.data.message} status="success" />
+        );
+        setReviews(response.data.reviews);
+        resetForm();
+        setRating(0);
       })
       .catch((error) => {
-        toast.custom(<Toast message={error.message} status="error" />);
+        console.log(error);
+        if (error.response) {
+          toast.custom(
+            <Toast
+              message={error.response.data.message || "Something went wrong"}
+              status="error"
+            />
+          );
+        } else {
+          toast.custom(<Toast message={error.message} status="error" />);
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -68,9 +83,11 @@ export default function AddReview({
     review: Yup.string().required().min(2).max(255),
     rating: Yup.mixed(),
   });
+
   return (
     <section>
       <Container>
+        {loading && <Loading isLoading={loading} />}
         <div className="flex flex-col w-full gap-10">
           <div className="flex w-full font-bold text-2xl">Add review</div>
           <div className="flex">
@@ -85,23 +102,16 @@ export default function AddReview({
             </div>
           </div>
 
-          {/* Forms     */}
-          <div
-            className="
-                flex flex-col w-full"
-          >
+          <div className="flex flex-col w-full">
             <Formik
               enableReinitialize
               initialValues={initialValues}
               validationSchema={validate}
-              onSubmit={async (values) => {
-                handleSave(values);
+              onSubmit={async (values, { resetForm }) => {
+                handleSave(values, { resetForm });
               }}
             >
-              {({
-                errors,
-                /* and other goodies */
-              }) => (
+              {({ errors }) => (
                 <Form>
                   <div className="flex flex-col gap-4">
                     <Field
@@ -141,16 +151,16 @@ export default function AddReview({
                         type="submit"
                         variant="primary"
                         className="w-full inline-flex gap-4 items-center"
-                        size="xl"
+                        size="lg"
                       >
                         <Send />
-                        <span className="text-xl">POST YOUR REVIEW</span>
+                        <span className="text-base">POST YOUR REVIEW</span>
                       </Button>
                     ) : (
                       <Button
                         variant="primary"
                         className="w-full inline-flex gap-4 items-center"
-                        size="xl"
+                        size="lg"
                         asChild
                       >
                         <Link href="/signin">

@@ -1,83 +1,18 @@
 "use client";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Loading from "@/components/custom/Loading";
 import { Category } from "@/types";
+import Link from "next/link";
 
-export default function CategoryList({ className }: { className: string }) {
-  const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([
-    {
-      _id: "66969377d0776db430386ddc",
-      name: "women's fashion",
-      slug: "womens-fashion",
-      link: "womens-fashion",
-      image: "https://m.media-amazon.com/images/I/718Hub5DjgL._SX522_.jpg",
-    },
-    {
-      _id: "668545b56c0c5a9794adb77c",
-      name: "hot sale",
-      slug: "hot-sale",
-      link: "hot-sale",
-      image: "https://m.media-amazon.com/images/I/718Hub5DjgL._SX522_.jpg",
-    },
-    {
-      _id: "668545aa6c0c5a9794adb778",
-      name: "headphones",
-      slug: "headphones",
-      link: "headphones",
-      image: "https://m.media-amazon.com/images/I/718Hub5DjgL._SX522_.jpg",
-    },
-    {
-      _id: "6685459f6c0c5a9794adb774",
-      name: "tablets",
-      slug: "tablets",
-      link: "tablets",
-      image: "https://m.media-amazon.com/images/I/718Hub5DjgL._SX522_.jpg",
-    },
-    {
-      _id: "6685458f6c0c5a9794adb770",
-      name: "backpacks",
-      slug: "backpacks",
-      link: "backpacks",
-      image: "https://m.media-amazon.com/images/I/718Hub5DjgL._SX522_.jpg",
-    },
-    {
-      _id: "668544f16c0c5a9794adb766",
-      name: "fashion",
-      slug: "fashion",
-      link: "fashion",
-      image: "https://m.media-amazon.com/images/I/718Hub5DjgL._SX522_.jpg",
-    },
-    {
-      _id: "668544806c0c5a9794adb754",
-      name: "mobiles",
-      slug: "mobiles",
-      link: "mobiles",
-      image: "https://m.media-amazon.com/images/I/718Hub5DjgL._SX522_.jpg",
-    },
-  ]);
-  const router = useRouter();
-
-  useEffect(() => {
-    // const getCategories = async () => {
-    //   setLoading(true);
-    //   await axios
-    //     .get(process.env.NEXT_PUBLIC_API_URL + "/api/categories")
-    //     .then((response) => {
-    //       setCategories(response.data.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
-    //     .finally(() => {
-    //       setLoading(false);
-    //     });
-    // };
-    // getCategories();
-  }, []);
-
+export default function CategoryList({
+  className,
+  categories,
+  loading,
+}: {
+  className: string;
+  categories: Category[];
+  loading: boolean;
+}) {
   return (
     <div
       id="categoryList"
@@ -87,15 +22,15 @@ export default function CategoryList({ className }: { className: string }) {
 
       {!loading &&
         categories &&
-        categories.map((item: Category, idx: number) => {
+        categories.slice(0, 10).map((item: Category, idx: number) => {
           return (
-            <div
+            <Link
               key={idx}
-              onClick={() => router.push(`/categories/${item.link}/products`)}
-              className="inline-flex items-center w-full p-2 hover:cursor-pointer hover:text-primary-800 capitalize"
+              href={`/categories/${item.slug}/products`}
+              className="inline-flex items-center w-full p-2 hover:cursor-pointer hover:text-primary-800 capitalize hover:font-semibold"
             >
-              <span className="hover:font-bold">{item.name}</span>
-            </div>
+              <span className="">{item.name}</span>
+            </Link>
           );
         })}
     </div>

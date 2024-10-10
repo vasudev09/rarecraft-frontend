@@ -1,37 +1,34 @@
 import React, { Fragment } from "react";
 import { Product } from "@/types";
 import Link from "next/link";
-import { BreadcrumbSeparator } from "@/components/custom/BreadCrumb";
 import { BsFacebook, BsLinkedin, BsTwitterX, BsWhatsapp } from "react-icons/bs";
 import { usePathname } from "next/navigation";
 
 export default function AdditionnalDescription({
   product,
-  active,
 }: {
   product: Product;
-  active: number;
 }) {
   const pathname = usePathname();
   return (
-    <ul className="flex flex-col gap-4 sm:mt-2 w-full">
-      <li className="inline-flex justify-between gap-4">
-        <span className="capitalize font-bold text-2xl">sku:</span>
-        <span className="">{product.subProducts[active].sku}</span>
+    <ul className="flex flex-col gap-10 mt-20 w-full">
+      <li className="inline-flex">
+        <span className="capitalize">category:</span>
+        <span className="text-primary capitalize ms-auto hover:underline">
+          <Link href={`/categories/${product.category.slug}/products`}>
+            {product.category.name}
+          </Link>
+        </span>
       </li>
 
-      <li className="inline-flex justify-between gap-4">
-        <span className="capitalize font-bold text-2xl">cateories:</span>
-        <span className="">category</span>
-      </li>
-
-      <li className="inline-flex justify-between gap-4">
-        <span className="capitalize font-bold text-2xl">share:</span>
-        <div className="inline-flex gap-4">
+      <li className="inline-flex">
+        <span className="capitalize">share:</span>
+        <div className="inline-flex gap-4 ms-auto text-slate-700">
           <span className="">
             <Link
               target="_blank"
-              href={`https://x.com/intent/post?url=${process.env.NEXT_PUBLIC_SERVER_URL}${pathname}`}
+              rel="noopener noreferer"
+              href={`https://x.com/intent/post?url=${process.env.NEXT_PUBLIC_HOST_URL}${pathname}`}
             >
               <BsTwitterX className="hover:text-primary-500" />
             </Link>
@@ -39,7 +36,8 @@ export default function AdditionnalDescription({
           <span className="">
             <Link
               target="_blank"
-              href={`https://linkedin.com/shareArticle?url=${process.env.NEXT_PUBLIC_SERVER_URL}${pathname}`}
+              rel="noopener noreferer"
+              href={`https://linkedin.com/shareArticle?url=${process.env.NEXT_PUBLIC_HOST_URL}${pathname}`}
             >
               <BsLinkedin className="hover:text-primary-500" />
             </Link>
@@ -47,7 +45,8 @@ export default function AdditionnalDescription({
           <span className="">
             <Link
               target="_blank"
-              href={`https://facebook.com/sharer/sharer.php?url=${process.env.NEXT_PUBLIC_SERVER_URL}${pathname}`}
+              rel="noopener noreferer"
+              href={`https://facebook.com/sharer/sharer.php?u=${process.env.NEXT_PUBLIC_HOST_URL}${pathname}`}
             >
               <BsFacebook className="hover:text-primary-500" />
             </Link>
@@ -55,7 +54,8 @@ export default function AdditionnalDescription({
           <span className="">
             <Link
               target="_blank"
-              href={`https://web.whatsapp.com/send?text=${process.env.NEXT_PUBLIC_SERVER_URL}${pathname}`}
+              rel="noopener noreferer"
+              href={`https://web.whatsapp.com/send?text=${process.env.NEXT_PUBLIC_HOST_URL}${pathname}`}
             >
               <BsWhatsapp className="hover:text-primary-500" />
             </Link>

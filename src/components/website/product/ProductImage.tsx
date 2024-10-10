@@ -5,9 +5,7 @@ import React, { useEffect, useState } from "react";
 import Container from "../../custom/Container";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-
 import { m } from "framer-motion";
-import Loading from "../../custom/Loading";
 
 export default function ProductImage({
   className,
@@ -20,20 +18,22 @@ export default function ProductImage({
   images: string[];
   active: number;
 }) {
-  const [loading, setLoading] = useState(false);
   const [changeImage, setChangeImage] = useState(images[active]);
 
   useEffect(() => {
-    setLoading(false);
     setChangeImage(images[active]);
   }, [product, images, active]);
 
   return (
     <section>
       <Container>
-        {loading && <Loading isLoading={loading} />}
-        <div className={cn("flex flex-col gap-y-6", className)}>
-          <div className="border py-10 border-slate-200 grid place-content-center h-[320px] p-2">
+        <div
+          className={cn(
+            "flex flex-col gap-y-6 text-center max-w-xl",
+            className
+          )}
+        >
+          <div className="border py-10 border-slate-200 grid place-content-center max-h-[400px]">
             <Zoom>
               <m.img
                 src={changeImage}
@@ -48,12 +48,12 @@ export default function ProductImage({
             </Zoom>
           </div>
 
-          <div className="flex items-center justify-center gap-4 mt-10">
+          <div className="flex items-center justify-center gap-4">
             {images.map((item: string, idx: number) => (
               <div
                 onClick={() => setChangeImage(item)}
                 key={idx}
-                className="grid border-2 w-full border-slate-100 place-content-center cursor-pointer hover:border-primary-400 h-14"
+                className="grid border-2 w-full border-slate-200 place-content-center cursor-pointer hover:border-primary px-1 h-14"
                 style={{
                   backgroundImage: `url(${item})`,
                   backgroundPosition: "center",

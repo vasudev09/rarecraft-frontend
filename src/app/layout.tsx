@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { josefin } from "./fonts";
 import "./globals.css";
 import { AuthProvider } from "@/hooks/AuthContext";
+import FramerMotionProvider from "@/providers/FramerMotionProvider";
+import ToastProvider from "@/providers/ToastProvider";
 
 export const dynamic = "force-dynamic";
 
@@ -93,7 +95,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`min-h-screen ${josefin.className} antialiased`}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <FramerMotionProvider>
+            <ToastProvider />
+            {children}
+          </FramerMotionProvider>
+        </AuthProvider>
       </body>
     </html>
   );

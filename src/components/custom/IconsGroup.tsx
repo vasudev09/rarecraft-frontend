@@ -4,14 +4,12 @@ import { cn } from "@/utils";
 import React, { useState } from "react";
 import { CiShoppingBasket } from "react-icons/ci";
 import CurrencyFormat from "./CurrencyFormat";
-import { useRouter } from "next/navigation";
 import Loading from "./Loading";
 
 export default function IconsGroup() {
   const [cartOpen, setCartOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   return (
     <div

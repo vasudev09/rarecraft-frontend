@@ -18,7 +18,7 @@ import {
 
 export default function Payments() {
   return (
-    <section className="mt-4">
+    <section className="mt-14 mb-20">
       <Container>
         <Swiper
           breakpoints={{

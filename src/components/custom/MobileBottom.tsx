@@ -22,7 +22,7 @@ export default function MobileBottom() {
           <span>Home</span>
         </Link>
         <Link
-          href="/cart"
+          href="/"
           className="group relative flex flex-col gap-1 items-center justify-center"
         >
           <ShoppingCart className="h-5 w-5 group-hover:text-primary-900 group-hover:font-bold" />
@@ -32,7 +32,7 @@ export default function MobileBottom() {
           <span>Cart</span>
         </Link>
         <Link
-          href="/signin"
+          href="/account/dashboard"
           className="group flex flex-col gap-1 items-center justify-center"
         >
           <User className="h-5 w-5 group-hover:text-primary-900 group-hover:font-bold" />

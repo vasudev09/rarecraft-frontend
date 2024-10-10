@@ -12,12 +12,14 @@ import { Auth } from "@/APIs/auth";
 interface AuthContextType {
   isAuthenticated: boolean | null;
   setIsAuthenticated: (isAuthenticated: boolean | null) => void;
+  username: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
     const validateUser = async () => {
@@ -25,11 +27,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const response = await Auth.validateUser();
         if (response.status === 200) {
           setIsAuthenticated(true);
+          setUsername(response.data.username);
         } else {
           setIsAuthenticated(false);
+          setUsername(null);
         }
       } catch (error) {
         setIsAuthenticated(false);
+        setUsername(null);
       }
     };
 
@@ -39,7 +44,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [isAuthenticated]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, username }}
+    >
       {children}
     </AuthContext.Provider>
   );

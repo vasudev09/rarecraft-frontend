@@ -10,7 +10,6 @@ export default function ReviewList({ reviews }: { reviews: Review[] }) {
   const PER_PAGE = 3;
   const count = Math.ceil(reviews.length / PER_PAGE);
   const _DATA = usePagination(reviews, PER_PAGE);
-
   const handleChange = (e: React.ChangeEvent<unknown>, p: number) => {
     setPage(p);
     _DATA.jump(p);

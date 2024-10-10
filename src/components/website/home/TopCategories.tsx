@@ -1,34 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Container from "../../custom/Container";
 import { Category } from "@/types";
-import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import Loading from "../../custom/Loading";
 
-export default function TopCategories() {
-  const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const getCategories = async () => {
-      setLoading(true);
-      await axios
-        .get(process.env.NEXT_PUBLIC_API_URL + "/api/categories")
-        .then((response) => {
-          setCategories(response.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    };
-    getCategories();
-  }, []);
-
+export default function TopCategories({
+  categories,
+  loading,
+}: {
+  categories: Category[];
+  loading: boolean;
+}) {
   return (
     <section className="py-10 w-full">
       <Container>
@@ -49,7 +33,7 @@ export default function TopCategories() {
               categories.slice(0, 4).map((item: Category, idx: number) => (
                 <Link
                   key={idx}
-                  href={`/categories/${item.link}/products`}
+                  href={`/categories/${item.slug}/products`}
                   className="flex flex-col items-center justify-between gap-12 rounded-md border border-gray-200 px-10 py-4 gap-y-2 cursor-pointer hover:border-primary-200 max-w-xl"
                 >
                   <Image

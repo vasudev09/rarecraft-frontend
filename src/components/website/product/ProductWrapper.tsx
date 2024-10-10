@@ -7,9 +7,7 @@ import { Product } from "@/types";
 
 export default function ProductWrapper({ product }: { product: Product }) {
   const [active, setActive] = useState<number>(0);
-  const [images, setImages] = useState<string[]>(
-    product?.subProducts[active].options[0].images
-  );
+  const [images, setImages] = useState<string[]>(product?.images);
 
   return (
     <section className="my-20">
@@ -21,13 +19,7 @@ export default function ProductWrapper({ product }: { product: Product }) {
             images={images}
             active={active}
           />
-          <ProductContent
-            className="flex-1 w-full"
-            product={product}
-            active={active}
-            setImages={setImages}
-            setActive={setActive}
-          />
+          <ProductContent className="flex-1 w-full" product={product} />
         </div>
       </Container>
     </section>

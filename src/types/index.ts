@@ -1,113 +1,73 @@
-//Search mobile types
+//Search mobile type
 export type FormValues = {
   search: string;
 };
 
-//Product Models
 export type Product = {
-  _id: string;
+  id: number;
   name: string;
-  featured: boolean;
-  slug: string;
   description: string;
-  category: Category;
-  brand: Brand;
-  content: string;
-  details: Detail[];
-  questions: Question[];
-  reviews: Review[];
-  subProducts: SubProduct[];
-};
-
-export type Detail = {
-  name: string;
-  value: string;
-};
-
-export type Page = {
-  _id: string;
-  name: string;
-  link: string;
-};
-
-export type Question = {
-  name: string;
-  value: string;
-};
-
-export type Review = {
-  _id?: string;
-  reviewBy?: User;
-  rating: number;
-  review: string;
-  likes: string[];
-  createdAt: string;
-  updatedAt?: string;
-};
-
-export type User = {
-  _id: string;
-  name: string;
-  email: string;
-  image: string;
-  password: string;
-  role: string;
-  createdAt?: Date;
-  address: Address[];
-  // TODO:Complete user
-};
-
-export type SubProduct = {
-  sku: string;
-  style: Style;
-  options: Option[];
-};
-
-export type Style = {
-  name: string;
-  color: string;
-  image: string;
-};
-
-export type Option = {
-  qty: number;
-  price: number;
-  sold: number;
-  option: string;
-  images: string[];
-  discount: number;
-};
-
-export type Category = {
-  _id: string;
-  name: string;
-  link: string;
+  content?: string;
   slug: string;
-  image: string;
+  tags: string[];
+  images: string[];
+  brand: Brand;
+  category: Category;
+  price: number;
+  discount: number;
+  details: Detail[];
+  reviews: Review[];
 };
 
 export type Brand = {
-  _id: string;
+  id: number;
   name: string;
-  link: string;
+  description: string;
+  slug: string;
+  image: string;
+  total_products: number;
+  reviews: {
+    avg_review: number;
+    total_reviews: number;
+  };
+};
+
+export type Category = {
+  id: number;
+  name: string;
   slug: string;
   image: string;
 };
 
-export type Address = {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  city: string;
-  country: string;
-  zipCode: string;
-  address: string;
-  phoneNumber: string;
-  state: string;
+export type Review = {
+  id: number;
+  review_by: string;
+  rating: number;
+  review: string;
+  likes: number[];
+  created_at: string;
 };
 
-export type sendEmailTypes = {
-  subject: string;
-  email: string;
-  message: string;
+export type Customer = {
+  id: number;
+  user: User;
+  mobile?: number;
+  image?: string;
 };
+
+export type User = {
+  id: number;
+  username: string;
+  email: string;
+};
+
+export type Detail = {
+  key: string;
+  value: string;
+};
+
+// export type sendEmailTypes = {
+//   subject: string;
+//   email: string;
+//   message: string;
+// };
