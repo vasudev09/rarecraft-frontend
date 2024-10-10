@@ -1,13 +1,56 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { m } from "framer-motion";
 import Image from "next/image";
 import { Button } from "@/components/custom/Button";
 import { LogOut } from "lucide-react";
-import Link from "next/link";
 import { useAuth } from "@/hooks/AuthContext";
+import { useRouter } from "next/navigation";
+import { Auth } from "@/APIs/auth";
+import toast from "react-hot-toast";
+import Toast from "./Toast";
 
-export default function UserMenu({ openUserMenu }: { openUserMenu: boolean }) {
-  const { isAuthenticated } = useAuth();
+export default function UserMenu({
+  openUserMenu,
+  setOpenUserMenu,
+}: {
+  openUserMenu: boolean;
+  setOpenUserMenu: (value: boolean) => void;
+}) {
+  const { isAuthenticated, setIsAuthenticated, username } = useAuth();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const signOut = async () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    await Auth.logout()
+      .then((response) => {
+        setIsAuthenticated(false);
+        toast.custom(
+          <Toast message="Successfully Logged Out" status="success" />
+        );
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response) {
+          toast.custom(
+            <Toast
+              message={error.response.data.message || "Something went wrong"}
+              status="error"
+            />
+          );
+        } else {
+          toast.custom(<Toast message={error.message} status="error" />);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     openUserMenu && (
@@ -33,11 +76,11 @@ export default function UserMenu({ openUserMenu }: { openUserMenu: boolean }) {
                 Welcome back
               </span>
               <h4 className="font-bold text-primary-800 capitalize">
-                {"Username"}
+                {username}
               </h4>
 
               <Button
-                // onClick={() => signOut({ callbackUrl: "/products" })}
+                onClick={signOut}
                 variant="outline"
                 size="icon"
                 className="w-28 flex gap-4 justify-around "
@@ -54,12 +97,24 @@ export default function UserMenu({ openUserMenu }: { openUserMenu: boolean }) {
             <li>
               <hr />
             </li>
-            <li className="hover:bg-neutral-50 w-full items-center py-2">
-              <Link href="/account/dashboard">Dashboard</Link>
+            <li
+              className="hover:bg-neutral-50 w-full items-center py-2"
+              onClick={() => {
+                router.push("/account/dashboard");
+                setOpenUserMenu(false);
+              }}
+            >
+              Dashboard
             </li>
 
-            <li className="hover:bg-neutral-50 w-full items-center py-2">
-              <Link href="/account/profile">Account</Link>
+            <li
+              className="hover:bg-neutral-50 w-full items-center py-2"
+              onClick={() => {
+                router.push("/account/profile");
+                setOpenUserMenu(false);
+              }}
+            >
+              Account
             </li>
           </ul>
         )}

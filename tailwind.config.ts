@@ -31,8 +31,6 @@ const config: Config = {
         // screens are actually screen resolutions and they are used to make set the breakpoint for each one in order to make our website responsive:
         // for instance tailcss set default define its default screens like sm, md,lg,xl,2xl and each and it also define its own breakpoints
 
-        // a breakpoint is actually a max width of a screen  for instance for xm: extra device th e max width are gonna set when we reach 360 and 574
-
         // we are going to overide that and set our own screens and breakpoints.
         //Good to know : screens resolution ends at 2xl so they do not work in html element afetr that value like 3xl:text-white ( not possible )
 

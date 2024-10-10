@@ -9,7 +9,7 @@ export default function Logo() {
       href="/"
       className="flex gap-4 items-center justify-center w-max"
     >
-      <Image src="/images/logo.png" width="70" height="70" alt="logo" />
+      <Image src="/images/logo.png" width="60" height="60" alt="logo" />
       <h2 className="hidden font-extrabold lg:flex text-[40px] tracking-tigh mt-1 text-primary-900 antialiased">
         RareCraft
       </h2>

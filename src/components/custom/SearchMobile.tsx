@@ -6,12 +6,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { useForm } from "react-hook-form";
 import { FormValues } from "@/types";
-import axios from "axios";
 import toast from "react-hot-toast";
 import Toast from "./Toast";
 import Loading from "./Loading";
 import { m } from "framer-motion";
 import SearchProduct from "./SearchProduct";
+import { ProductAPI } from "@/APIs/product";
 
 export default function SearchMobile({
   openSearchMobile,
@@ -24,51 +24,63 @@ export default function SearchMobile({
   const { setFocus } = useForm<FormValues>({
     progressive: true,
   });
-
   const [loading, setLoading] = useState(false);
   const [dataProducts, setDataProducts] = useState([]);
+
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleFocusOn = () => {
     inputSearch.current?.focus();
   };
-
   const handleFocusOff = () => {
     inputSearch.current?.blur();
   };
-
   useEffect(() => {
     setFocus("search");
   }, [setFocus]);
 
   /** API SEARCH */
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoading(true);
-
     const search = e.currentTarget.value;
-
-    if (search.length === 0) setLoading(false);
-    if (search.length > 3) {
-      await axios
-        .get(process.env.NEXT_PUBLIC_API_URL + "/api/products", {
-          params: { search: search },
-        })
-        .then((response) => {
-          const data = response.data;
-          console.log(data);
-          setDataProducts(data.products);
-        })
-        .catch((error) => {
-          toast.custom(<Toast message={error.message} status="error" />);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
     }
+
+    debounceTimeout.current = setTimeout(async () => {
+      setLoading(true);
+      if (search.length === 0) {
+        setLoading(false);
+        setDataProducts([]);
+        return;
+      }
+
+      if (search.length >= 3) {
+        await ProductAPI.getList({ params: { search: search } })
+          .then((response) => {
+            const data = response.data;
+            setDataProducts(data);
+          })
+          .catch((error) => {
+            if (error.response) {
+              toast.custom(
+                <Toast
+                  message={
+                    error.response.data.message || "Something went wrong"
+                  }
+                  status="error"
+                />
+              );
+            } else {
+              toast.custom(<Toast message={error.message} status="error" />);
+            }
+          });
+      }
+      setLoading(false);
+    }, 1000);
   };
 
   return (
     <>
-      {loading && <Loading isLoading={loading} />}
       <button
         className={cn("", openSearchMobile && "hidden")}
         onClick={() => setOpenSearchMobile(!openSearchMobile)}
@@ -81,11 +93,12 @@ export default function SearchMobile({
         exit={{ opacity: 0, y: -15 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className={cn(
-          "hidden hover:shadown-xl rounded-md bg-white w-full",
-          openSearchMobile && "flex lg:hidden justify-between items-center "
+          "fixed top-0 left-0 z-[1001] w-full h-full bg-white flex flex-col",
+          openSearchMobile ? "visible" : "invisible"
         )}
       >
-        <form className="flex items-center gap-4 w-full">
+        <form className="flex items-center gap-4 w-full p-4">
+          {loading && <Loading isLoading={loading} />}
           <Button
             variant="outline"
             size="icon"
@@ -99,7 +112,7 @@ export default function SearchMobile({
           </Button>
 
           <Input
-            className="focus:outline-none  focus:visible-none focus:ring-0 appearance-none ring-white bg-transparent flex-1 "
+            className="focus:outline-none focus:visible-none focus:ring-0 appearance-none ring-white bg-transparent flex-1 "
             placeholder="Search a product, brand"
             ref={inputSearch}
             onInput={handleSearch}
@@ -107,10 +120,12 @@ export default function SearchMobile({
             onMouseLeave={handleFocusOff}
           />
         </form>
-        <SearchProduct
-          products={dataProducts}
-          className="absolute grid grid-cols-2 gap-4 place-content-center justify-items-center overflow-auto w-full top-[60px] left-0 h-auto shadow-sm z-20 p-4 bg-white md:grid-cols-3"
-        />
+        <div className="flex-1 overflow-y-auto w-full px-4">
+          <SearchProduct
+            products={dataProducts}
+            className="grid grid-cols-2 gap-4 justify-items-center bg-white shadow-sm"
+          />
+        </div>
       </m.div>
     </>
   );

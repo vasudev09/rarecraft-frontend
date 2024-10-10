@@ -1,5 +1,10 @@
-import Image from "next/image";
+import HomePage from "@/components/website/home/HomePage";
+import * as React from "react";
 
-export default function Home() {
-  return <div className="min-h-screen p-8 pb-20 gap-16">Home</div>;
+export default async function Home() {
+  return (
+    <>
+      <HomePage />
+    </>
+  );
 }

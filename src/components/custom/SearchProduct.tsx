@@ -13,20 +13,17 @@ export default function SearchProduct({
   className?: string;
 }) {
   return (
-    <div className={cn("", "md:grid-cols-3", className)}>
+    <div className={cn("", "md:grid-cols-3 lg:grid-cols-2", className)}>
       {products.length > 0
         ? products.map((item: Product, idx: number) => {
             return (
-              <div
-                key={idx}
-                className="flex flex-col gap-4 hover:shadow-md h-fit border border-gray-200"
-              >
+              <div key={idx} className="flex flex-col gap-4 hover:shadow-md">
                 <Link
                   href={`/products/${item.slug}`}
-                  className="h-40  flex items-center gap-4 w-full justify-center"
+                  className="h-40 flex items-center gap-4 w-full justify-center"
                 >
                   <Image
-                    src={item.subProducts[0].options[0].images[0]}
+                    src={item.images[0]}
                     width="150"
                     height="150"
                     alt="search product image"
@@ -44,7 +41,7 @@ export default function SearchProduct({
                   <div className="text-primary-800 text-xl font-medium text-center">
                     <CurrencyFormat
                       className="text-center font-bold"
-                      value={item.subProducts[0].options[0].price}
+                      value={item.price}
                     />
                   </div>
                 </Link>

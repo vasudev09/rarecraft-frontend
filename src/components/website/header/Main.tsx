@@ -27,6 +27,8 @@ export default function Main() {
               <Logo />
             </div>
           </div>
+
+          {/* Mobile Screens */}
           <div className="flex items-center gap-2 w-full justify-end lg:hidden">
             <SearchMobile
               openSearchMobile={openSearchMobile}
@@ -36,6 +38,8 @@ export default function Main() {
               className={cn("", openSearchMobile && "hidden")}
             />
           </div>
+
+          {/* Large Screens */}
           <SearchInput />
           <IconsGroup />
         </Row>

@@ -29,7 +29,6 @@ export default function Ad() {
 
             <LanguageCurrency className="flex gap-4" />
 
-            {/* TODO:Auth logic here */}
             <div className="flex justify-flex-end items-center gap-4 px-4 py-2 h-full hover:bg-neutral-100">
               {/* If login  */}
               {isAuthenticated === true ? (
@@ -38,7 +37,10 @@ export default function Ad() {
                   <span onClick={() => setOpenUserMenu(!openUserMenu)}>
                     Account
                   </span>
-                  <UserMenu openUserMenu={openUserMenu} />
+                  <UserMenu
+                    openUserMenu={openUserMenu}
+                    setOpenUserMenu={setOpenUserMenu}
+                  />
                 </div>
               ) : (
                 <Link
