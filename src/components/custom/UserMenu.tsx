@@ -30,7 +30,7 @@ export default function UserMenu({
       .then((response) => {
         setIsAuthenticated(false);
         toast.custom(
-          <Toast message="Successfully Logged Out" status="success" />
+          <Toast message={response.data.message} status="success" />
         );
         window.location.reload();
       })

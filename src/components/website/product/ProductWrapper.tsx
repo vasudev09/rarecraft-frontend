@@ -1,13 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Container from "../../custom/Container";
 import ProductImage from "./ProductImage";
 import ProductContent from "./ProductContent";
 import { Product } from "@/types";
 
 export default function ProductWrapper({ product }: { product: Product }) {
-  const [active, setActive] = useState<number>(0);
-  const [images, setImages] = useState<string[]>(product?.images);
+  const active = 0;
+  const images = product?.images || [];
 
   return (
     <section className="my-20">

@@ -10,7 +10,7 @@ export default function NotFound() {
         <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">404</h1>
           <p className="text-xl text-gray-600 mb-8 text-center">
-            Oops! The page you're looking for can't be found.
+            Oops! The page you&#39;re looking for can&#39;t be found.
           </p>
           <div className="flex space-x-4">
             <Link href="/">

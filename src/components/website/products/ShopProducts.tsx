@@ -1,6 +1,5 @@
 import usePagination from "@/hooks/usePagination";
-import axios from "axios";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import ProductList from "./ProductsList";
 import { Pagination } from "@mui/material";
@@ -22,7 +21,7 @@ export default function ShopProducts({
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(1);
-  const [perpage, setPerPages] = useState(10);
+  const perpage = 10;
   const count = Math.ceil(products.length / perpage);
   const _DATA = usePagination(products, perpage);
   const handleChange = (e: React.ChangeEvent<unknown>, p: number) => {
@@ -69,8 +68,8 @@ export default function ShopProducts({
         setMaxPrice={setMaxPrice}
         loading={loading}
         slug={category ? category : brand}
-        perpage={perpage}
-        setPerPages={setPerPages}
+        // perpage={perpage}
+        // setPerPages={setPerPages}
         filter={filter}
         setFilter={setFilter}
       />

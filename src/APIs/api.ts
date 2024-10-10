@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let config = {
+const config = {
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   withCredentials: true,
   headers: { "cache-control": "no-cache" },

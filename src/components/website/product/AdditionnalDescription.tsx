@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Product } from "@/types";
 import Link from "next/link";
 import { BsFacebook, BsLinkedin, BsTwitterX, BsWhatsapp } from "react-icons/bs";

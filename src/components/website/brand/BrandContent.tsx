@@ -1,8 +1,7 @@
 import { cn } from "@/utils";
 import { Brand } from "@/types";
-import React, { useState } from "react";
+import React from "react";
 import Container from "../../custom/Container";
-import Loading from "../../custom/Loading";
 import { Rating } from "@mui/material";
 import { BsFacebook, BsLinkedin, BsTwitterX, BsWhatsapp } from "react-icons/bs";
 import Link from "next/link";

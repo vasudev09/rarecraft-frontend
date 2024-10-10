@@ -12,7 +12,7 @@ export default function Reviews({ product }: { product: Product }) {
       <div className="flex flex-col gap-4">
         <AddReview
           product={product}
-          reviews={reviews}
+          // reviews={reviews}
           setReviews={setReviews}
         />
         <ReviewList reviews={reviews} />

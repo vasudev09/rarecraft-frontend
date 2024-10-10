@@ -1,6 +1,6 @@
 import { cn } from "@/utils";
 import { Product } from "@/types";
-import React, { useState } from "react";
+import React from "react";
 import Container from "../../custom/Container";
 import ProductInfo from "./ProductInfo";
 import ProductPrice from "./ProductPrice";

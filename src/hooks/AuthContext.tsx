@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUsername(null);
         }
       } catch (error) {
+        console.log(error);
         setIsAuthenticated(false);
         setUsername(null);
       }

@@ -1,5 +1,4 @@
 import { Button } from "@/components/custom/Button";
-import { getDate } from "@/utils";
 import { Review } from "@/types";
 import { Rating } from "@mui/material";
 import { ThumbsUp } from "lucide-react";

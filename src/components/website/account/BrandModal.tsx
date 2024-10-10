@@ -56,7 +56,11 @@ export default function BrandModal({
       }),
   });
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: {
+    name: string;
+    description: string;
+    image: null | File;
+  }) => {
     if (loading) {
       return;
     }
@@ -222,8 +226,8 @@ export default function BrandModal({
                     type="file"
                     name="image"
                     accept="image/*"
-                    onChange={(event: any) => {
-                      const file = event.currentTarget.files[0] || null;
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      const file = event.currentTarget.files?.[0] || null;
                       setFieldValue("image", file);
                     }}
                     className={cn(
