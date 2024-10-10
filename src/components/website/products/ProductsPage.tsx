@@ -2,7 +2,7 @@
 import Container from "@/components/custom/Container";
 import MainProduct from "./MainProduct";
 import SidebarLeft from "./SidebarLeft";
-import React, { useState } from "react";
+import React from "react";
 
 export default function ProductsPage({ tag }: { tag: string }) {
   return (

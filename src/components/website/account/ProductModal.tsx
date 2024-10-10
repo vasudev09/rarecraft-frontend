@@ -15,7 +15,7 @@ import Loading from "../../custom/Loading";
 import { cn } from "@/utils";
 import { Button } from "@/components/custom/Button";
 import { ProductAPI } from "@/APIs/product";
-import { Category, Product, Brand } from "@/types";
+import { Category, Product, Brand, Detail } from "@/types";
 import { Edit } from "lucide-react";
 import { CategoryAPI } from "@/APIs/category";
 import { Account } from "@/APIs/account";
@@ -91,10 +91,12 @@ export default function ProductModal({
     price: item?.price || "",
     discount: item?.discount || 0,
     images: [],
-    details: item?.details || [
-      { key: "", value: "" },
-      { key: "", value: "" },
-    ],
+    details:
+      item?.details ||
+      ([
+        { key: "", value: "" },
+        { key: "", value: "" },
+      ] as Detail[]),
     choice: choice,
   };
 
@@ -135,24 +137,41 @@ export default function ProductModal({
       .min(1, "At least one key-value pair is required"),
   });
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: {
+    name: string;
+    description: string;
+    content: string;
+    brand: string | number;
+    category: string | number;
+    price: string | number;
+    discount: string | number;
+    images: File[] | [];
+    details: Detail[];
+  }) => {
     if (loading) {
       return;
     }
     setLoading(true);
 
+    const [str_brand, str_category, str_price, str_discount] = [
+      String(values.brand),
+      String(values.category),
+      String(values.price),
+      String(values.discount),
+    ];
+
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("description", values.description);
     formData.append("content", values.content);
-    formData.append("brand", values.brand);
-    formData.append("category", values.category);
-    formData.append("price", values.price);
-    formData.append("discount", values.discount);
-    const sortedImages = values.images.sort(
+    formData.append("brand", str_brand);
+    formData.append("category", str_category);
+    formData.append("price", str_price);
+    formData.append("discount", str_discount);
+    const sortedImages = values.images?.sort(
       (a: File, b: File) => a.lastModified - b.lastModified
     );
-    sortedImages.forEach((image: File, index: number) => {
+    sortedImages?.forEach((image: File, index: number) => {
       formData.append(`image${index}`, image);
     });
     formData.append("details", JSON.stringify(values.details));
@@ -451,7 +470,7 @@ export default function ProductModal({
                         {({ form }) => (
                           <>
                             {form.values.details.map(
-                              (_: any, index: number) => (
+                              (_: Detail, index: number) => (
                                 <div
                                   key={index}
                                   className="flex flex-wrap gap-4 items-start"

@@ -22,6 +22,7 @@ export default async function page({ params }: { params: { slug: string } }) {
 
       return response.data;
     } catch (error) {
+      console.log(error);
       return null;
     }
   }

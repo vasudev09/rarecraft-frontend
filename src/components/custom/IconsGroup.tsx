@@ -4,12 +4,9 @@ import { cn } from "@/utils";
 import React, { useState } from "react";
 import { CiShoppingBasket } from "react-icons/ci";
 import CurrencyFormat from "./CurrencyFormat";
-import Loading from "./Loading";
 
 export default function IconsGroup() {
   const [cartOpen, setCartOpen] = useState(false);
-
-  const [loading, setLoading] = useState(false);
 
   return (
     <div
@@ -18,7 +15,6 @@ export default function IconsGroup() {
         "lg:flex items-center justify-end gap-8 ms-auto text-right"
       )}
     >
-      {loading && <Loading isLoading={loading} />}
       <div className="hidden w-auto ms-auto lg:flex">
         <Sheet open={cartOpen} onOpenChange={setCartOpen}>
           <SheetTrigger>

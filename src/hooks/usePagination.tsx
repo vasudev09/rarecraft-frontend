@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 
-export default function usePagination(data: Array<any>, itemsPerPage: number) {
+export default function usePagination<T>(data: T[], itemsPerPage: number) {
   const [currentPage, setCurrentPage] = useState(1);
   const maxPage = Math.ceil(data.length / itemsPerPage);
 
-  function currentData() {
+  function currentData(): T[] {
     const begin = (currentPage - 1) * itemsPerPage;
     const end = begin + itemsPerPage;
     return Array.isArray(data) ? data.slice(begin, end) : [];

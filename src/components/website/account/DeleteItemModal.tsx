@@ -3,7 +3,6 @@ import { Trash2Icon } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Toast from "../../custom/Toast";
-import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,7 +26,6 @@ export default function ModalDeleteAddress({
   item: Product | Brand;
 }) {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleDelete = async () => {
     if (loading) {

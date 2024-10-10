@@ -17,10 +17,10 @@ import Loading from "@/components/custom/Loading";
 export default function AddReview({
   product,
   setReviews,
-  reviews,
-}: {
+}: // reviews,
+{
   product: Product;
-  reviews: Review[];
+  // reviews: Review[];
   setReviews: (value: Review[]) => void;
 }) {
   const { isAuthenticated } = useAuth();

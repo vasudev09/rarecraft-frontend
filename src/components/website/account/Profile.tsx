@@ -11,7 +11,7 @@ import { cn } from "@/utils";
 import { Button } from "@/components/custom/Button";
 import { Send } from "lucide-react";
 import Loading from "../../custom/Loading";
-import { Account } from "@/APIs/account";
+import { Account, ProfileData } from "@/APIs/account";
 
 type initialValuesProps = {
   name: string;
@@ -72,7 +72,7 @@ export default function Profile() {
 
   const handleSave = async (values: initialValuesProps) => {
     setLoading(true);
-    const data: any = {
+    const data: ProfileData = {
       username: values.name,
     };
     if (values.password) {

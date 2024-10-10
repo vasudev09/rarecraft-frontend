@@ -34,7 +34,6 @@ import { Product } from "@/types";
 import { cn } from "@/utils";
 import { Input } from "@/components/custom/Input";
 import toast from "react-hot-toast";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Account } from "@/APIs/account";
 import Loading from "@/components/custom/Loading";

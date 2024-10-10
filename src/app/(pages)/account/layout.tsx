@@ -1,12 +1,11 @@
 "use client";
 import Container from "@/components/custom/Container";
 import SidebarAccount from "@/components/website/account/SidebarAccount";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "@/hooks/AuthContext";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-export default function layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
 
@@ -14,7 +13,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
     if (isAuthenticated === false) {
       router.push("/signin");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   if (isAuthenticated !== true) {
     return <div className="min-h-screen"></div>;

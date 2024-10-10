@@ -18,7 +18,7 @@ export interface LoginData {
   password: string;
 }
 
-export interface Config {
-  headers?: { [key: string]: string };
-  params?: { [key: string]: any };
-}
+// export interface Config {
+//   headers?: { [key: string]: string };
+//   params?: { [key: string]: any };
+// }
