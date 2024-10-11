@@ -16,7 +16,7 @@ export default function AdditionnalDescription({
       <li className="inline-flex">
         <span className="capitalize">category:</span>
         <span className="text-primary capitalize ms-auto hover:underline">
-          <Link href={`/categories/${product.category.slug}/products`}>
+          <Link href={`/products/category/${product.category.slug}`}>
             {product.category.name}
           </Link>
         </span>

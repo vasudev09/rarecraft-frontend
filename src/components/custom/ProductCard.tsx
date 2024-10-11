@@ -19,7 +19,7 @@ export default function ProductCard({ item }: { item: Product }) {
   return (
     <div className="border border-gray-200 rounded-md pb-4 group hover:shadow-xl min-w-[180px]">
       <Link
-        href={` /products/${item.slug}`}
+        href={` /product/${item.slug}`}
         className="flex relative p-1 justify-center items-center w-full"
       >
         <div
@@ -57,7 +57,7 @@ export default function ProductCard({ item }: { item: Product }) {
           <span className="ms-4 font-bold">({item.reviews.length})</span>
         </div>
 
-        <Link href={`/products/${item.slug}`} className="flex relative ">
+        <Link href={`/product/${item.slug}`} className="flex relative ">
           <h1 className="text-slate-700 font-normal text-xs text-clip text-justify text-pretty capitalize my-4 lg:text-sm">
             {item.name.substring(0, 60)}...
           </h1>
