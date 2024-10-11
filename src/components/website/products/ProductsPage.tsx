@@ -1,4 +1,3 @@
-"use client";
 import Container from "@/components/custom/Container";
 import MainProduct from "./MainProduct";
 import SidebarLeft from "./SidebarLeft";

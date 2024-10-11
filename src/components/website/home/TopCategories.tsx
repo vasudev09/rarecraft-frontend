@@ -1,22 +1,23 @@
-"use client";
 import React from "react";
 import Container from "../../custom/Container";
 import { Category } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
-import Loading from "../../custom/Loading";
+import { CategoryAPI } from "@/APIs/category";
 
-export default function TopCategories({
-  categories,
-  loading,
-}: {
-  categories: Category[];
-  loading: boolean;
-}) {
+export default async function TopCategories() {
+  const categories = await CategoryAPI.getList()
+    .then((response) => {
+      return response.data;
+    })
+    .catch((e) => {
+      console.log(e);
+      return [];
+    });
+
   return (
     <section className="py-10 w-full">
       <Container>
-        {loading && <Loading isLoading={loading} />}
         <div className="flex w-full gap-10 justify-center flex-wrap xl:justify-between xl:flex-nowrap">
           <div className="flex-col flex items-center gap-4 xl:items-start ">
             <h1 className="text-2xl leading-8 text-center font-bold lg:text-left">

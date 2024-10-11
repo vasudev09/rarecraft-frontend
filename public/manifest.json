@@ -1,0 +1,40 @@
+{
+  "short_name": "RareCraft",
+  "name": "RareCarft: Artisanal Products",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#3367D6",
+  "shortcuts": [
+    {
+      "name": "Shop Artisan Products",
+      "short_name": "RareCraft",
+      "description": "A wide range of artisanal products online",
+      "url": "/?source=pwa",
+      "icons": [{ "src": "/images/logo.png", "sizes": "192x192" }]
+    }
+  ],
+  "description": "Shop Artisanal Products",
+  "screenshots": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "540x720",
+      "form_factor": "narrow"
+    }
+  ]
+}

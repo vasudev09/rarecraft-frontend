@@ -1,3 +1,4 @@
+"use client";
 import usePagination from "@/hooks/usePagination";
 import React, { useEffect, useState } from "react";
 import TopBar from "./TopBar";
