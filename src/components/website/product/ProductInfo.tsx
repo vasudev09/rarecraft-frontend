@@ -1,6 +1,6 @@
 import { getRating } from "@/utils";
 import { Product } from "@/types";
-import { Rating } from "@mui/material";
+import Rating from "@mui/material/Rating";
 import React from "react";
 import Link from "next/link";
 

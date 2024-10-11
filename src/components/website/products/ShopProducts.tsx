@@ -3,7 +3,7 @@ import usePagination from "@/hooks/usePagination";
 import React, { useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import ProductList from "./ProductsList";
-import { Pagination } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
 import { ProductAPI } from "@/APIs/product";
 
 export default function ShopProducts({

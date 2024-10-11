@@ -6,7 +6,7 @@ import {
 import { Product } from "@/types";
 import Link from "next/link";
 import React from "react";
-import { Rating } from "@mui/material";
+import Rating from "@mui/material/Rating";
 import CurrencyFormat from "./CurrencyFormat";
 import { Truck } from "lucide-react";
 import { Award } from "lucide-react";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Container from "../../custom/Container";
-import { Rating } from "@mui/material";
+import Rating from "@mui/material/Rating";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "@/hooks/AuthContext";

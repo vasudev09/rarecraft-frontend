@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Container from "../../custom/Container";
 import { Review } from "@/types";
-import { Pagination } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
 import usePagination from "@/hooks/usePagination";
 import ReviewItem from "./ReviewItem";
 
