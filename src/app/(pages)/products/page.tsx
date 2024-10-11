@@ -1,35 +1,30 @@
 import React from "react";
 import MainProduct from "@/components/website/products/MainProduct";
 
-export default function page({
+export default async function page({
   searchParams,
 }: {
-  searchParams: { tag: string };
+  searchParams?: { tag?: string };
 }) {
-  return <MainProduct tag={searchParams.tag} />;
+  return <MainProduct tag={searchParams?.tag || ""} />;
 }
 
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: { tag: string };
+  searchParams?: { tag?: string };
 }) {
+  const tag = searchParams?.tag || "";
+  const capitalizedTag = tag ? tag.charAt(0).toUpperCase() + tag.slice(1) : "";
+
   return {
-    title: searchParams?.tag
-      ? `${
-          searchParams.tag.charAt(0).toUpperCase() + searchParams.tag.slice(1)
-        } Products - RareCraft`
-      : "Products - RareCraft",
-    twitter: searchParams?.tag
-      ? `${
-          searchParams.tag.charAt(0).toUpperCase() + searchParams.tag.slice(1)
-        } Products - RareCraft`
-      : "Products - RareCraft",
-    openGraph: searchParams?.tag
-      ? `${
-          searchParams.tag.charAt(0).toUpperCase() + searchParams.tag.slice(1)
-        } Products - RareCraft`
-      : "Products - RareCraft",
+    title: `${capitalizedTag} Products - RareCraft`,
+    twitter: {
+      title: `${capitalizedTag} Products - RareCraft`,
+    },
+    openGraph: {
+      title: `${capitalizedTag} Products - RareCraft`,
+    },
     alternates: {
       canonical: `/products`,
     },
