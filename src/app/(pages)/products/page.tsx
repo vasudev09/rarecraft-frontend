@@ -15,19 +15,21 @@ export async function generateMetadata({
   searchParams: { tag: string };
 }) {
   return {
-    title: `${
-      searchParams?.tag?.charAt(0).toUpperCase() + searchParams?.tag?.slice(1)
-    } Products - RareCraft`,
-    twitter: {
-      title: `${
-        searchParams?.tag?.charAt(0).toUpperCase() + searchParams?.tag?.slice(1)
-      } Products - RareCraft`,
-    },
-    openGraph: {
-      title: `${
-        searchParams?.tag?.charAt(0).toUpperCase() + searchParams?.tag?.slice(1)
-      } Products - RareCraft`,
-    },
+    title: searchParams?.tag
+      ? `${
+          searchParams.tag.charAt(0).toUpperCase() + searchParams.tag.slice(1)
+        } Products - RareCraft`
+      : "Products - RareCraft",
+    twitter: searchParams?.tag
+      ? `${
+          searchParams.tag.charAt(0).toUpperCase() + searchParams.tag.slice(1)
+        } Products - RareCraft`
+      : "Products - RareCraft",
+    openGraph: searchParams?.tag
+      ? `${
+          searchParams.tag.charAt(0).toUpperCase() + searchParams.tag.slice(1)
+        } Products - RareCraft`
+      : "Products - RareCraft",
     alternates: {
       canonical: `/products`,
     },

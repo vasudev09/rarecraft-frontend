@@ -1,6 +1,6 @@
 import { Button } from "@/components/custom/Button";
 import { Review } from "@/types";
-import { Rating } from "@mui/material";
+import Rating from "@mui/material/Rating";
 import { ThumbsUp } from "lucide-react";
 import { useAuth } from "@/hooks/AuthContext";
 import Image from "next/image";

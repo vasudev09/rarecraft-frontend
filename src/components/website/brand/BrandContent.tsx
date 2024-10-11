@@ -2,7 +2,7 @@ import { cn } from "@/utils";
 import { Brand } from "@/types";
 import React from "react";
 import Container from "../../custom/Container";
-import { Rating } from "@mui/material";
+import Rating from "@mui/material/Rating";
 import { BsFacebook, BsLinkedin, BsTwitterX, BsWhatsapp } from "react-icons/bs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
