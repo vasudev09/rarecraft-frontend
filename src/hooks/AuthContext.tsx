@@ -22,6 +22,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
+    const accessToken = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("access_token="));
+
+    if (!accessToken) {
+      setIsAuthenticated(false);
+      setUsername(null);
+      return;
+    }
     const validateUser = async () => {
       try {
         const response = await Auth.validateUser();
@@ -33,7 +42,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUsername(null);
         }
       } catch (error) {
-        console.log(error);
+        console.error("Error validating user:", error);
         setIsAuthenticated(false);
         setUsername(null);
       }
