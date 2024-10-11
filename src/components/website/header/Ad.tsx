@@ -1,17 +1,12 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import Container from "@/components/custom/Container";
 import Row from "@/components/custom/Row";
 import Link from "next/link";
-import { LogOut, Mail, User } from "lucide-react";
+import { Mail } from "lucide-react";
 import LanguageCurrency from "@/components/custom/LanguageCurrency";
-import UserMenu from "@/components/custom/UserMenu";
-import { useAuth } from "@/hooks/AuthContext";
+import LoginButton from "./LoginButton";
 
 export default function Ad() {
-  const { isAuthenticated } = useAuth();
-  const [openUserMenu, setOpenUserMenu] = useState(false);
-
   return (
     <section className="hidden relative lg:flex w-full border-b border-neutral-200">
       <Container>
@@ -26,32 +21,8 @@ export default function Ad() {
               <Mail className="text-primary-500 h-4 w-4" />
               <span className="mx-2">Contact</span>
             </Link>
-
             <LanguageCurrency className="flex gap-4" />
-
-            <div className="flex justify-flex-end items-center gap-4 px-4 py-2 h-full hover:bg-neutral-100">
-              {/* If login  */}
-              {isAuthenticated === true ? (
-                <div className="flex gap-2 hover:cursor-pointer">
-                  <User className="h-4 w-4 text-primary-500" />
-                  <span onClick={() => setOpenUserMenu(!openUserMenu)}>
-                    Account
-                  </span>
-                  <UserMenu
-                    openUserMenu={openUserMenu}
-                    setOpenUserMenu={setOpenUserMenu}
-                  />
-                </div>
-              ) : (
-                <Link
-                  href="/signin"
-                  className="cursor-pointer flex gap-4 items-center"
-                >
-                  <LogOut className="h-4 w-4 text-primary-500" />
-                  <span>Login</span>
-                </Link>
-              )}
-            </div>
+            <LoginButton />
           </div>
         </Row>
       </Container>

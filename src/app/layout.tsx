@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     },
   },
 
-  manifest: `${process.env.NEXT_PUBLIC_HOST_URL}/manifest.webmanifest`,
+  manifest: `${process.env.NEXT_PUBLIC_HOST_URL}/manifest.json`,
 
   icons: {
     icon: "/images/logo.png",

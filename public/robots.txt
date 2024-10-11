@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: http://rarecraft.vercel.app
+
+# Sitemaps
+Sitemap: http://rarecraft.vercel.app/sitemap.xml

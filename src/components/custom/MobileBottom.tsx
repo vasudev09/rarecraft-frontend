@@ -1,4 +1,3 @@
-"use client";
 import { FolderKanban, Home, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import React from "react";

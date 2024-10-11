@@ -28,7 +28,7 @@ export default function Payments() {
             1024: { slidesPerView: 3, spaceBetween: 40 },
             1280: { slidesPerView: 5, spaceBetween: 40 },
           }}
-          autoplay={{ delay: 25000, disableOnInteraction: false }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
           spaceBetween={50}
           slidesPerView={1}
           navigation={false}

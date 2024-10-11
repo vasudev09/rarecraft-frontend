@@ -1,26 +1,24 @@
 import React from "react";
-import Loading from "@/components/custom/Loading";
 import { Brand } from "@/types";
 import Link from "next/link";
+import { BrandAPI } from "@/APIs/brand";
 
-export default function BrandsList({
-  className,
-  brands,
-  loading,
-}: {
-  className: string;
-  brands: Brand[];
-  loading: boolean;
-}) {
+export default async function BrandsList({ className }: { className: string }) {
+  const brands = await BrandAPI.getList()
+    .then((response) => {
+      return response.data;
+    })
+    .catch((e) => {
+      console.log(e);
+      return [];
+    });
   return (
     <div
       id="brandsList"
       className={`hidden lg:flex flex-col gap-4 p-4 ${className}`}
     >
-      {loading && <Loading isLoading={loading} />}
       <div className="my-3 text-center font-medium">Brands</div>
-      {!loading &&
-        brands &&
+      {brands &&
         brands.slice(0, 10).map((item: Brand, idx: number) => {
           return (
             <Link

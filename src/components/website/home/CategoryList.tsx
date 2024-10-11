@@ -1,27 +1,28 @@
-"use client";
 import React from "react";
-import Loading from "@/components/custom/Loading";
 import { Category } from "@/types";
 import Link from "next/link";
+import { CategoryAPI } from "@/APIs/category";
 
-export default function CategoryList({
+export default async function CategoryList({
   className,
-  categories,
-  loading,
 }: {
   className: string;
-  categories: Category[];
-  loading: boolean;
 }) {
+  const categories = await CategoryAPI.getList()
+    .then((response) => {
+      return response.data;
+    })
+    .catch((e) => {
+      console.log(e);
+      return [];
+    });
+
   return (
     <div
       id="categoryList"
       className={`hidden lg:flex flex-col gap-4 p-4 ${className}`}
     >
-      {loading && <Loading isLoading={loading} />}
-
-      {!loading &&
-        categories &&
+      {categories &&
         categories.slice(0, 10).map((item: Category, idx: number) => {
           return (
             <Link

@@ -11,8 +11,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/custom/BreadCrumb";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { ProductAPI } from "@/APIs/product";
+import { Skeleton } from "@/components/custom/Skeleton";
 
 export default async function page({ params }: { params: { slug: string } }) {
   async function getProductBySlug(slug: string) {
@@ -66,7 +67,9 @@ export default async function page({ params }: { params: { slug: string } }) {
 
       <ProductWrapper product={product} />
       <ProductSpecifications product={product} />
-      <FeaturedProducts />
+      <Suspense fallback={<Skeleton className="w-full h-[30vh]" />}>
+        <FeaturedProducts />
+      </Suspense>
       <Reviews product={product} />
     </>
   );

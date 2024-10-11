@@ -1,3 +1,4 @@
+"use client";
 import { Input } from "@/components/custom/Input";
 import { cn } from "@/utils";
 import React, { useEffect, useRef, useState } from "react";

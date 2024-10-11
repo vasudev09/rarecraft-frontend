@@ -20,11 +20,13 @@ export default function ProductList({
             <ProductCard item={item} key={idx} />
           ))
         ) : (
-          <Loading isLoading={loading} />
+          <div className="h-[50vh]">
+            <Loading isLoading={loading} />
+          </div>
         )}
       </div>
       {loading === false && products.length === 0 && (
-        <div className="flex flex-col justify-center items-center py-20 px-20  gap-10 w-full">
+        <div className="flex flex-col justify-center items-center h-[50vh]  gap-10 w-full">
           <ShoppingBasket className="font-bold" size={100} />
           <h1 className="font-medium text-center  text-2xl flex">
             No Product Found
