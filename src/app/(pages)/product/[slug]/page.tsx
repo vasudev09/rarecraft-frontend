@@ -49,7 +49,7 @@ export default async function page({ params }: { params: { slug: string } }) {
               <Link href={"/products"}>store</Link>
               <BreadcrumbSeparator />
 
-              <Link href={`/categories/${product.category.slug}/products`}>
+              <Link href={`/products/category/${product.category.slug}`}>
                 {product.category.name}
               </Link>
 
@@ -96,7 +96,7 @@ export async function generateMetadata({
         .replace(/^./, (char) => char.toUpperCase())}`,
     },
     alternates: {
-      canonical: `/products/${params.slug}`,
+      canonical: `/product/${params.slug}`,
     },
     keywords: params.slug.split("-"),
   };

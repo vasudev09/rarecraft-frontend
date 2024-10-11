@@ -2,6 +2,7 @@ import { getRating } from "@/utils";
 import { Product } from "@/types";
 import { Rating } from "@mui/material";
 import React from "react";
+import Link from "next/link";
 
 export default function ProductInfo({ product }: { product: Product }) {
   const rating = getRating(product);
@@ -25,6 +26,18 @@ export default function ProductInfo({ product }: { product: Product }) {
         <span className="pt-2 text-slate-700">
           ({product.reviews.length}) reviews
         </span>
+      </div>
+
+      <div>
+        <p>
+          Brand:{" "}
+          <Link
+            href={`/brand/${product.brand.slug}`}
+            className="cursor-pointer underline"
+          >
+            {product.brand.name}
+          </Link>
+        </p>
       </div>
 
       <div>

@@ -34,7 +34,7 @@ export default async function TopCategories() {
               categories.slice(0, 4).map((item: Category, idx: number) => (
                 <Link
                   key={idx}
-                  href={`/categories/${item.slug}/products`}
+                  href={`/products/category/${item.slug}`}
                   className="flex flex-col items-center justify-between gap-12 rounded-md border border-gray-200 px-10 py-4 gap-y-2 cursor-pointer hover:border-primary-200 max-w-xl"
                 >
                   <Image

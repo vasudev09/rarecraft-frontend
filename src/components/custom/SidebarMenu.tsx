@@ -86,7 +86,7 @@ export default function SidebarMenu() {
                     return (
                       <Link
                         key={idx}
-                        href={`/categories/${item.slug}/products`}
+                        href={`/products/category/${item.slug}`}
                         onClick={() => setIsOpen(false)}
                         className="group inline-flex items-center px-4 py-2 gap-4 w-full hover:text-primary-700 capitalize cursor-pointer"
                       >
@@ -107,7 +107,7 @@ export default function SidebarMenu() {
                     return (
                       <Link
                         key={idx}
-                        href={`/brand/${item.slug}/products`}
+                        href={`/products/brand/${item.slug}`}
                         onClick={() => setIsOpen(false)}
                         className="group inline-flex items-center px-4 py-2 gap-4 w-full hover:text-primary-700 capitalize cursor-pointer"
                       >

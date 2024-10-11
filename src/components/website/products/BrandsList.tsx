@@ -22,7 +22,7 @@ export default async function BrandsList({ className }: { className: string }) {
         brands.slice(0, 10).map((item: Brand, idx: number) => {
           return (
             <Link
-              href={`/brand/${item.slug}/products`}
+              href={`/products/brand/${item.slug}`}
               key={idx}
               className="inline-flex items-center w-full p-2 hover:cursor-pointer hover:text-primary-800 capitalize hover:font-semibold"
             >

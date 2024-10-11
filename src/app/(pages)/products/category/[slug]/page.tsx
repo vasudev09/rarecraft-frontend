@@ -1,8 +1,8 @@
-import BrandPage from "@/components/website/brand/BrandPage";
 import React from "react";
+import MainProduct from "@/components/website/products/MainProduct";
 
 export default function page({ params }: { params: { slug: string } }) {
-  return <BrandPage slug={params.slug} />;
+  return <MainProduct category={params.slug} />;
 }
 
 export async function generateMetadata({
@@ -13,19 +13,19 @@ export async function generateMetadata({
   return {
     title: `${
       params.slug.charAt(0).toUpperCase() + params.slug.slice(1)
-    } - RareCraft`,
+    } Products - RareCraft`,
     twitter: {
       title: `${
         params.slug.charAt(0).toUpperCase() + params.slug.slice(1)
-      } - RareCraft`,
+      } Products - RareCraft`,
     },
     openGraph: {
       title: `${
         params.slug.charAt(0).toUpperCase() + params.slug.slice(1)
-      } - RareCraft`,
+      } Products - RareCraft`,
     },
     alternates: {
-      canonical: `/brand/${params.slug}/products`,
+      canonical: `/products/category/${params.slug}`,
     },
   };
 }

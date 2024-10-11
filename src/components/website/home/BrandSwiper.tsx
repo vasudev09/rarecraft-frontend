@@ -34,7 +34,7 @@ export default function BrandSwiper({ brands }: { brands: Brand[] }) {
       {brands &&
         brands.slice(0, 10).map((item: Brand, idx: number) => (
           <SwiperSlide key={idx} className="relative py-10">
-            <Link href={`/brand/${item.slug}/products`}>
+            <Link href={`/products/brand/${item.slug}`}>
               <Image
                 className="block mx-auto w-60 h-28 object-contain"
                 src={item.image}

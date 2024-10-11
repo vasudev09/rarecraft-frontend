@@ -19,7 +19,7 @@ export default function SearchProduct({
             return (
               <div key={idx} className="flex flex-col gap-4 hover:shadow-md">
                 <Link
-                  href={`/products/${item.slug}`}
+                  href={`/product/${item.slug}`}
                   className="h-40 flex items-center gap-4 w-full justify-center"
                 >
                   <Image
@@ -31,7 +31,7 @@ export default function SearchProduct({
                 </Link>
 
                 <Link
-                  href={`/products/${item.slug}`}
+                  href={`/product/${item.slug}`}
                   className="flex flex-col gap-4 justify-center items-center"
                 >
                   <h1 className="font-medium text-center capitalize">

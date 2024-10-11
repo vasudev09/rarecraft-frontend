@@ -47,7 +47,7 @@ export default async function page({ params }: { params: { slug: string } }) {
               <Link href={"/products"}>store</Link>
               <BreadcrumbSeparator />
 
-              <Link href={`/brand/${brand.slug}/products`}>{brand.name}</Link>
+              <Link href={`/products/brand/${brand.slug}`}>{brand.name}</Link>
 
               <BreadcrumbSeparator />
 

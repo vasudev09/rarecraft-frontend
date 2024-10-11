@@ -74,7 +74,7 @@ export const columns: ColumnDef<Product>[] = [
       <div
         className="line-clamp-3 break-all hover:underline cursor-pointer"
         onClick={() => {
-          window.open(`/products/${row.original.slug}`, "_blank");
+          window.open(`/product/${row.original.slug}`, "_blank");
         }}
       >
         {row.getValue("name")}

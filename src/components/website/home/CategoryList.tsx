@@ -27,7 +27,7 @@ export default async function CategoryList({
           return (
             <Link
               key={idx}
-              href={`/categories/${item.slug}/products`}
+              href={`/products/category/${item.slug}`}
               className="inline-flex items-center w-full p-2 hover:cursor-pointer hover:text-primary-800 capitalize hover:font-semibold"
             >
               <span className="">{item.name}</span>
