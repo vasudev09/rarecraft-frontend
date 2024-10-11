@@ -11,7 +11,9 @@ export default function Banner() {
       <Container>
         <div className="flex flex-row gap-4">
           <Suspense
-            fallback={<Skeleton className="h-[100vh] w-[300px] my-2" />}
+            fallback={
+              <Skeleton className="h-[100vh] w-[300px] my-2 hidden lg:flex" />
+            }
           >
             <CategoryList className="w-[300px]" />
           </Suspense>

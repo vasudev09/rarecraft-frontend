@@ -49,12 +49,12 @@ export const metadata: Metadata = {
     },
   },
 
-  manifest: `${process.env.NEXT_PUBLIC_HOST_URL}/manifest.json`,
+  manifest: `${process.env.NEXT_PUBLIC_HOST_URL}/site.webmanifest`,
 
   icons: {
     icon: "/images/logo.png",
-    shortcut: "/images/logo.png",
-    apple: "/images/logo.png",
+    shortcut: "/images/favicon-32x32.png",
+    apple: "/images/apple-touch-icon.png",
   },
 
   twitter: {
@@ -68,6 +68,9 @@ export const metadata: Metadata = {
       {
         url: `${process.env.NEXT_PUBLIC_HOST_URL}/images/logo.png`,
       },
+      {
+        url: `${process.env.NEXT_PUBLIC_HOST_URL}/images/favicon-32x32.png`,
+      },
     ],
   },
 
@@ -79,6 +82,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_HOST_URL}/images/logo.png`,
+      },
+      {
+        url: `${process.env.NEXT_PUBLIC_HOST_URL}/images/favicon-32x32.png`,
       },
     ],
     type: "website",
