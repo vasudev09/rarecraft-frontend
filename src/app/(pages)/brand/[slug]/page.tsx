@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import { BrandAPI } from "@/APIs/brand";
+import BrandJSONLD from "@/components/website/brand/BrandJSONLD";
 export default async function page({ params }: { params: { slug: string } }) {
   async function getBrandBySlug(slug: string) {
     try {
@@ -41,6 +42,7 @@ export default async function page({ params }: { params: { slug: string } }) {
     <>
       {/* Breadcrumb  */}
       <section className="my-10">
+        <BrandJSONLD brand={brand} />
         <Container>
           <Breadcrumb>
             <BreadcrumbList className="capitalize flex flex-wrap">

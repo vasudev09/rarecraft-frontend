@@ -14,6 +14,7 @@ import Link from "next/link";
 import React, { Suspense } from "react";
 import { ProductAPI } from "@/APIs/product";
 import { Skeleton } from "@/components/custom/Skeleton";
+import ProductJSONLD from "@/components/website/product/ProductJSONLD";
 
 export default async function page({ params }: { params: { slug: string } }) {
   async function getProductBySlug(slug: string) {
@@ -43,6 +44,7 @@ export default async function page({ params }: { params: { slug: string } }) {
     <>
       {/* Breadcrumb  */}
       <section className="my-10">
+        <ProductJSONLD product={product} />
         <Container>
           <Breadcrumb>
             <BreadcrumbList className="capitalize flex flex-wrap">
