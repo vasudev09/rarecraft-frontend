@@ -32,6 +32,11 @@ export default function BrandJSONLD({ brand }: { brand: Brand }) {
       "@type": "AggregateRating",
       ratingValue: brand.reviews.avg_review,
       reviewCount: brand.reviews.total_reviews,
+      itemReviewed: {
+        "@type": "Brand",
+        name: brand.name,
+        url: `${process.env.NEXT_PUBLIC_HOST_URL}/brand/${brand.slug}`,
+      },
     },
   };
   return (
