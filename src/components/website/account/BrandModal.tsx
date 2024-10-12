@@ -18,6 +18,8 @@ import { Button } from "@/components/custom/Button";
 import { Brand } from "@/types";
 import Image from "next/image";
 import { BrandAPI } from "@/APIs/brand";
+import model from "@/utils/gemini";
+import { Wand } from "lucide-react";
 
 export default function BrandModal({
   choice,
@@ -27,6 +29,8 @@ export default function BrandModal({
   item?: Brand;
 }) {
   const [loading, setLoading] = useState(false);
+  const [loadingGemini, setLoadingGemini] = useState(false);
+  const [generatedDescription, setGeneratedDescription] = useState("");
 
   const initialValues = {
     name: item?.name || "",
@@ -128,6 +132,37 @@ export default function BrandModal({
     }
   };
 
+  const handleGenerateDescription = async (
+    values: { name: string },
+    setFieldValue: (
+      field: string,
+      value: string | number | undefined | File
+    ) => void
+  ) => {
+    if (!values.name || values.name.length < 3) {
+      toast.custom(
+        <Toast message="Please enter atleast 3 characters" status="error" />
+      );
+      return;
+    }
+
+    try {
+      setLoadingGemini(true);
+      const prompt = `Create a clear, friendly, and inviting paragraph to describe my artisan brand called "${values.name}". The brand focuses on handmade, creative products that highlight craftsmanship and sustainability. Keep the tone approachable and authentic, avoiding complex words or formal language. The description should sound welcoming to everyday customers who appreciate unique, handcrafted items, without being too technical or elaborate. Make it easy to read and relatable, encouraging customers to connect with the brand.`;
+      const result = await model.generateContent(prompt);
+      const description = result.response.text();
+      setGeneratedDescription(description);
+      setFieldValue("description", description);
+    } catch (error) {
+      console.log(error);
+      toast.custom(
+        <Toast message="Failed to generate description" status="error" />
+      );
+    } finally {
+      setLoadingGemini(false);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -153,7 +188,7 @@ export default function BrandModal({
             validationSchema={validate}
             onSubmit={handleSubmit}
           >
-            {({ errors, setFieldValue }) => (
+            {({ errors, setFieldValue, values }) => (
               <Form className="w-full space-y-6">
                 {loading && <Loading isLoading={loading} />}
 
@@ -180,21 +215,38 @@ export default function BrandModal({
                     />
                   </div>
 
-                  <div className="flex flex-col gap-1 w-full md:w-2/3">
+                  <div className="flex flex-col gap-1 w-full md:w-2/3 relative">
                     <label
                       htmlFor="description"
                       className="block text-sm font-medium text-gray-900"
                     >
                       Description
                     </label>
+                    <button
+                      type="button"
+                      className={`absolute right-0 top-0 flex flex-row gap-3 cursor-pointer text-primary-500 px-2 rounded-md ${
+                        loadingGemini ? "animate-pulse" : ""
+                      }`}
+                      onClick={() =>
+                        handleGenerateDescription(values, setFieldValue)
+                      }
+                      disabled={loadingGemini}
+                    >
+                      <Wand className="h-5 w-5" />
+                      <p className="text-[14px] font-semibold">Auto generate</p>
+                    </button>
                     <Field
                       as="textarea"
                       name="description"
                       rows={6}
+                      value={generatedDescription || initialValues.description}
                       className={cn(
                         "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500",
                         errors.description && "border border-red-300"
                       )}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                        setGeneratedDescription(e.target.value)
+                      }
                     />
                     <ErrorMessage
                       name="description"

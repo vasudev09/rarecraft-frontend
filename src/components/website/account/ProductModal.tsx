@@ -19,6 +19,8 @@ import { Category, Product, Brand, Detail } from "@/types";
 import { Edit } from "lucide-react";
 import { CategoryAPI } from "@/APIs/category";
 import { Account } from "@/APIs/account";
+import model from "@/utils/gemini";
+import { Wand } from "lucide-react";
 
 export default function ProductModal({
   choice,
@@ -30,6 +32,8 @@ export default function ProductModal({
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>();
   const [myBrands, setMyBrands] = useState<Brand[]>();
+  const [loadingGemini, setLoadingGemini] = useState(false);
+  const [generatedDescription, setGeneratedDescription] = useState("");
 
   useEffect(() => {
     async function getCategories() {
@@ -227,6 +231,51 @@ export default function ProductModal({
     }
   };
 
+  const handleGenerateDescription = async (
+    values: { name: string; brand: string | number; category: string | number },
+    setFieldValue: (
+      field: string,
+      value: string | number | undefined | []
+    ) => void
+  ) => {
+    if (!values.name || values.name.length < 6) {
+      toast.custom(
+        <Toast message="Please enter atleast 6 characters" status="error" />
+      );
+      return;
+    }
+
+    const brand = myBrands?.find((b) => b.id == Number(values.brand))?.name;
+    const category = categories?.find(
+      (c) => c.id == Number(values.category)
+    )?.name;
+
+    let brandPart = "";
+    let categoryPart = "";
+    if (brand) {
+      brandPart = ` with brand name ${brand}`;
+    }
+    if (category) {
+      categoryPart = ` and category ${category}`;
+    }
+
+    try {
+      setLoadingGemini(true);
+      const prompt = `Create a clear, friendly, and inviting paragraph with only four lines or short to describe my new product called "${values.name}"${brandPart}${categoryPart}. Keep the tone approachable and authentic, avoiding complex words or formal language. The description should sound welcoming to everyday customers who appreciate unique, handcrafted items, without being too technical or elaborate. Make it easy to read and relatable, encouraging customers to connect with the product.`;
+      const result = await model.generateContent(prompt);
+      const description = result.response.text();
+      setGeneratedDescription(description);
+      setFieldValue("description", description);
+    } catch (error) {
+      console.log(error);
+      toast.custom(
+        <Toast message="Failed to generate description" status="error" />
+      );
+    } finally {
+      setLoadingGemini(false);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -252,7 +301,7 @@ export default function ProductModal({
             validationSchema={validate}
             onSubmit={handleSubmit}
           >
-            {({ errors, setFieldValue }) => (
+            {({ errors, setFieldValue, values }) => (
               <Form className="w-full space-y-6">
                 {loading && <Loading isLoading={loading} />}
                 <div className="flex flex-col md:flex-row gap-6 w-full">
@@ -278,21 +327,38 @@ export default function ProductModal({
                     />
                   </div>
 
-                  <div className="flex flex-col gap-1 w-full md:w-1/2">
+                  <div className="flex flex-col gap-1 w-full md:w-1/2 relative">
                     <label
                       htmlFor="description"
                       className="block text-sm font-medium text-gray-900"
                     >
                       Description
                     </label>
+                    <button
+                      type="button"
+                      className={`absolute right-0 top-0 flex flex-row gap-3 cursor-pointer text-primary-500 px-2 rounded-md ${
+                        loadingGemini ? "animate-pulse" : ""
+                      }`}
+                      onClick={() =>
+                        handleGenerateDescription(values, setFieldValue)
+                      }
+                      disabled={loadingGemini}
+                    >
+                      <Wand className="h-5 w-5" />
+                      <p className="text-[14px] font-semibold">Auto generate</p>
+                    </button>
                     <Field
                       as="textarea"
                       name="description"
-                      rows={4}
+                      rows={6}
+                      value={generatedDescription || initialValues.description}
                       className={cn(
                         "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500",
                         errors.description && "border border-red-300"
                       )}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                        setGeneratedDescription(e.target.value)
+                      }
                     />
                     <ErrorMessage
                       name="description"
@@ -540,7 +606,14 @@ export default function ProductModal({
 
                 <div className="flex justify-end">
                   <Button type="submit" className="p-6">
-                    {choice === "add" ? "Add" : "Update"} Product
+                    {choice === "add"
+                      ? loading
+                        ? "Adding"
+                        : "Add"
+                      : loading
+                      ? "Updating"
+                      : "Update"}{" "}
+                    Product
                   </Button>
                 </div>
               </Form>
