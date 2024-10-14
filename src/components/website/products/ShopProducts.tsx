@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import ProductList from "./ProductsList";
 import Pagination from "@mui/material/Pagination";
-import { ProductAPI } from "@/APIs/product";
 
 export default function ShopProducts({
   category,
@@ -32,29 +31,27 @@ export default function ShopProducts({
 
   const getProducts = async () => {
     setLoading(true);
-    await ProductAPI.getListFromEdge({
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-      params: {
-        sortby: filter,
-        category: category,
-        brand: brand,
-        tag: tag,
-        min_price: minPrice,
-        max_price: maxPrice,
-      },
-      timeout: 30000,
-    })
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST_URL}/api/edge-products?${
+          filter ? `sortby=${filter}` : ""
+        }${category ? `&category=${category}` : ""}${
+          brand ? `&brand=${brand}` : ""
+        }${tag ? `&tag=${tag}` : ""}${
+          minPrice ? `&min_price=${minPrice}` : ""
+        }${maxPrice ? `&max_price=${maxPrice}` : ""}`,
+        {
+          cache: "no-cache",
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        setProducts(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {

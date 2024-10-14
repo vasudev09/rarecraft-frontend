@@ -1,15 +1,16 @@
 import { NextRequest } from "next/server";
-import { ProductAPI } from "@/APIs/product";
 
 export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const backendResponse = await ProductAPI.getList({
-    params: searchParams,
-  });
+  const queryString = searchParams.toString();
 
-  if (backendResponse.status !== 200) {
+  const backendResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products?${queryString}`
+  );
+
+  if (!backendResponse.ok) {
     return new Response(
       JSON.stringify({ message: "Failed to fetch products" }),
       {
@@ -18,7 +19,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const products = backendResponse.data;
+  const products = await backendResponse.json();
 
   return new Response(JSON.stringify(products), {
     headers: { "Content-Type": "application/json" },
