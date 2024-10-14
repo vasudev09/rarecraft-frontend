@@ -32,7 +32,10 @@ export default function ShopProducts({
 
   const getProducts = async () => {
     setLoading(true);
-    await ProductAPI.getList({
+    await ProductAPI.getListFromEdge({
+      headers: {
+        "Cache-Control": "no-cache",
+      },
       params: {
         sortby: filter,
         category: category,
@@ -41,6 +44,7 @@ export default function ShopProducts({
         min_price: minPrice,
         max_price: maxPrice,
       },
+      timeout: 30000,
     })
       .then((response) => {
         setProducts(response.data);
