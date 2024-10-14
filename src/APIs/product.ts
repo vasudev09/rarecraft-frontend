@@ -1,11 +1,8 @@
 import { get, post, put, del } from "./api";
-import axios from "axios";
 
 export const ProductAPI = {
   getBySlug: (config = {}) => get(`/api/product`, config),
   getList: (config = {}) => get(`/api/products`, config),
-  getListFromEdge: (config = {}) =>
-    axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/edge-products`, config),
   add: (data: FormData) => post(`/api/product`, data),
   update: (data: FormData, config = {}) => put(`/api/product`, data, config),
   delete: (config = {}) => del(`/api/product`, config),
